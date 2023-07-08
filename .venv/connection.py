@@ -1,7 +1,7 @@
 from flask import Flask, g
 import psycopg2
 
- # to run the docker server : docker run --name esami_database -e POSTGRES_PASSWORD=123456 -p 5432:5432 -d postgres    
+
 db_params = {
             'host':     'localhost',
             'port':     '5432',
