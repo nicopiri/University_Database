@@ -1,5 +1,4 @@
 from flask import Flask
-import connection
 import insert_data
 
 app = Flask("__Database-Project__")
