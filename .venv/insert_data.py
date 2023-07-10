@@ -14,3 +14,18 @@ def insert(name , age):
     
     except psycopg2.Error as e:
         return 'Error inserting data: {}'.format(e)
+
+def get():
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        query = "SELECT * FROM mytable"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        cursor.close()
+        connection.close_db(exception=None)
+        return str(result)
+    except psycopg2.Error as e:
+        return 'Error inserting data: {}'.format(e)
+
+        
