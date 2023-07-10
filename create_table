@@ -1,0 +1,37 @@
+-- Tabella Studente
+CREATE TABLE studenti (
+    matricola INT PRIMARY KEY,
+    nome VARCHAR(50),
+    cognome VARCHAR(50),
+    codice_fiscale VARCHAR(16),
+    luogo_nascita VARCHAR(100),
+    data_nascita DATE,
+    data_immatricolazione DATE
+);
+-- Tabella Docente
+CREATE TABLE docenti (
+    id_docente INT PRIMARY KEY,
+    nome VARCHAR(50),
+    cognome VARCHAR(50)
+);
+-- Tabella Esame
+CREATE TABLE esami (
+    id_esame INT PRIMARY KEY,
+    nome VARCHAR(100),
+    descrizione VARCHAR(500),
+    min_prove INT,
+    max_prove INT,
+    docente_responsabile INT,
+    FOREIGN KEY (docente_responsabile) REFERENCES docenti(id_docente)
+);
+
+-- Tabella Prova
+CREATE TABLE prove (
+    id_prova INT PRIMARY KEY,
+    appello DATE,
+    tipo VARCHAR(50),
+    ricaduta_esame VARCHAR(50),
+    opzionale BOOLEAN,
+    esame_appartenente INT,
+     FOREIGN KEY (esame_appartenente) REFERENCES esami(id_esame)
+);
