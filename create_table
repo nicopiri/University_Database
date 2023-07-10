@@ -35,3 +35,22 @@ CREATE TABLE prove (
     esame_appartenente INT,
      FOREIGN KEY (esame_appartenente) REFERENCES esami(id_esame)
 );
+-- Tabella prova sostenuta
+CREATE TABLE prove_sostenuta (
+    id_studente INT,
+    id_prova INT,
+    data_appello DATE,
+    data_superamento DATE,
+    data_scadenza DATE,
+    voto DECIMAL(3,1),
+    FOREIGN KEY (id_studente) REFERENCES studenti(id_studente),
+    FOREIGN KEY (id_prova) REFERENCES prove(id_prova)
+);
+
+-- Tabella gestione prova
+CREATE TABLE prova_gestita (
+    id_docente INT, 
+    id_prova INT,
+    FOREIGN KEY (id_prova) REFERENCES prove(id_prova),
+    FOREIGN KEY (id_docente) REFERENCES DOCENTI(id_docente)
+)
