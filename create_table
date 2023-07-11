@@ -1,18 +1,19 @@
 -- Tabella Studente
-CREATE TABLE studenti (
-    matricola INT PRIMARY KEY,
+CREATE TABLE utenti (
+    id_utente INT PRIMARY KEY,
     nome VARCHAR(50),
     cognome VARCHAR(50),
     codice_fiscale VARCHAR(16),
     luogo_nascita VARCHAR(100),
     data_nascita DATE,
-    data_immatricolazione DATE
+    data_immatricolazione DATE,
+    ruolo INT,
+    FOREIGN KEY (ruolo) REFERENCES ruoli(id)
 );
--- Tabella Docente
-CREATE TABLE docenti (
-    id_docente INT PRIMARY KEY,
-    nome VARCHAR(50),
-    cognome VARCHAR(50)
+-- AccessRole
+CREATE TABLE access_role (
+    id INT PRIMARY KEY,
+    ruolo VARCHAR(50)
 );
 -- Tabella Esame
 CREATE TABLE esami (
