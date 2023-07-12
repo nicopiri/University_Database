@@ -27,5 +27,7 @@ def get():
         return str(result)
     except psycopg2.Error as e:
         return 'Error inserting data: {}'.format(e)
+    
+    
 
         
