@@ -11,7 +11,7 @@ CREATE TABLE utenti (
     FOREIGN KEY (ruolo) REFERENCES ruoli(id)
 );
 -- AccessRole
-CREATE TABLE access_role (
+CREATE TABLE ruoli (
     id INT PRIMARY KEY,
     ruolo VARCHAR(50)
 );
