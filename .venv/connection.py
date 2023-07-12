@@ -3,11 +3,11 @@ import psycopg2
 
 
 db_params = {
-            'host':     'localhost',
+            'host':     'snuffleupagus.db.elephantsql.com',
             'port':     '5432',
-            'database': 'postgres',
-            'user':     'postgres',
-            'password': '123456'
+            'database': 'qrihrfnq',
+            'user':     'qrihrfnq',
+            'password': 'zjC1KpH9eZtBbH5InptE_J_v_qc3OIz1'
             }
 
 def open_db():
