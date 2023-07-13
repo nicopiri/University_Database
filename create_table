@@ -23,7 +23,7 @@ CREATE TABLE esami (
     min_prove INT,
     max_prove INT,
     docente_responsabile INT,
-    FOREIGN KEY (docente_responsabile) REFERENCES docenti(id_docente)
+    FOREIGN KEY (docente_responsabile) REFERENCES utenti(id_utente)
 );
 
 -- Tabella Prova
@@ -44,7 +44,7 @@ CREATE TABLE prove_sostenuta (
     data_superamento DATE,
     data_scadenza DATE,
     voto DECIMAL(3,1),
-    FOREIGN KEY (id_studente) REFERENCES studenti(id_studente),
+    FOREIGN KEY (id_studente) REFERENCES utenti(id_utente),
     FOREIGN KEY (id_prova) REFERENCES prove(id_prova)
 );
 
@@ -53,5 +53,5 @@ CREATE TABLE prova_gestita (
     id_docente INT, 
     id_prova INT,
     FOREIGN KEY (id_prova) REFERENCES prove(id_prova),
-    FOREIGN KEY (id_docente) REFERENCES DOCENTI(id_docente)
+    FOREIGN KEY (id_docente) REFERENCES utenti(id_utente)
 )
