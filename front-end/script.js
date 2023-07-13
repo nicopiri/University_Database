@@ -5,16 +5,33 @@ document.getElementById("login-form").addEventListener("submit", function(event)
   var username = document.getElementById("username").value;
   var password = document.getElementById("password").value;
 
-  // Perform your login logic here (e.g., send a request to the server)
+  // Create the URL with the username and password values
+  var url = "http://127.0.0.1:5000/try?id=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
 
-  // For this example, simply display the entered username and password in the console
-  console.log("Username: " + username);
-  console.log("Password: " + password);
+  // Send a GET request to the API endpoint
+  fetch(url)
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(data) {
+      // Handle the response data
+      if (data === "Logged in successfully") {
+        // Redirect to another page or perform any other action on success
+        window.location.href = "dopo_login.html";
+      } else {
+        // Display error message
+        alert("Incorrect password");
+      }
+    })
+    .catch(function(error) {
+      console.log("Error:", error);
+    });
 
   // Clear the form fields
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
 });
+
 
 document.getElementById("reset-password-btn").addEventListener("click", function() {
   var username = document.getElementById("username").value;

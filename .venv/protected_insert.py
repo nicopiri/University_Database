@@ -25,22 +25,6 @@ def insert_utenti(id_utente, nome, cognome, codice_fiscale, luogo_nascita, data_
     except psycopg2.Error as e:
         return 'Error inserting data: {}'.format(e)
 
-def insert_ruolo(id, ruolo):
-    try:
-        conn = connection.open_db()
-        cursor = conn.cursor()
-        query = "INSERT INTO ruoli (id, ruolo) VALUES (%s, %s)"
-        values = (
-            bleach.clean(id),
-            bleach.clean(ruolo)
-        )
-        cursor.execute(query, values)
-        conn.commit()
-        connection.close_db(exception=None)
-        return 'Data inserted successfully!'
-
-    except psycopg2.Error as e:
-        return 'Error inserting data: {}'.format(e)
 
 def insert_esame(id_esame, nome, descrizione, min_prove, max_prove, docente_responsabile):
     try:
