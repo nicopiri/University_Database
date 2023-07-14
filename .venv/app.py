@@ -23,7 +23,7 @@ def get_users():
     else:
         return "Incorrect password"
     
-@app.route('/insert', methods=['POST'])
+@app.route('/insert/utente', methods=['POST'])
 def user_insert():
     data = request.get_json()
     nome = data.get('nome')
@@ -34,3 +34,53 @@ def user_insert():
     
     ret = protected_insert.insert_utenti(nome, cognome, cf, luogo_nascita, data_nascita)
     return jsonify(ret)
+
+@app.route('/insert/esame', methods=['POST'])
+def esame_insert():
+    data = request.get_json()
+    nome = data.get('nome')
+    descrizione = data.get('descrizione')
+    min_prove = data.get('min')
+    max_prove = data.get('max')
+    docente_responsabile = data.get('docente')
+
+    ret =  protected_insert.insert_esame(nome, descrizione, min_prove, max_prove, docente_responsabile)
+    return jsonify(ret)
+
+
+@app.route('/insert/prova', methods=['POST'])
+def prova_insert():
+    data = request.get_json()
+    appello = data.get('appello')
+    tipo = data.get('tipo')
+    ricaduta_esame = data.get('ricaduta')
+    opzionale = data.get('opzionale')
+    esame_appartenente = data.get('esame')
+
+    ret = protected_insert.insert_prova(appello, tipo, ricaduta_esame, opzionale, esame_appartenente)
+    return jsonify(ret)
+
+
+@app.route('/insert/prova_sostenuta', methods=['POST'])
+def prova_sostenuta_insert():
+    data = request.get_json()
+    id_studente = data.get('studente')
+    id_prova = data.get('prova')
+    data_appello = data.get('appello')
+    data_superamento = data.get('superamento')
+    data_scadenza = data.get('scadenza')
+    voto = data.get('voto')
+
+    ret = protected_insert.insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto)
+    return jsonify(ret)
+
+
+@app.route('/insert/prova_gestita', methods=['POST'])
+def prova_gestita_insert():
+    data = request.get_json()
+    id_docente = data.get('docente')
+    id_prova = data.get('prova')
+
+    ret = protected_insert.insert_prova_gestita(id_docente, id_prova)
+    return jsonify(ret)
+

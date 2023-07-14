@@ -30,13 +30,16 @@ def insert_utenti(nome, cognome, codice_fiscale, luogo_nascita, data_nascita):
 
 
 
-def insert_esame(id_esame, nome, descrizione, min_prove, max_prove, docente_responsabile):
+def insert_esame(nome, descrizione, min_prove, max_prove, docente_responsabile):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
-        query = "INSERT INTO esami (id_esame, nome, descrizione, min_prove, max_prove, docente_responsabile) VALUES (%s, %s, %s, %s, %s, %s)"
+        query = """
+                INSERT INTO esami (nome, descrizione, min_prove, max_prove, docente_responsabile) 
+                VALUES (%s, %s, %s, %s, %s)
+                RETURNING id_esame
+                """
         values = (
-            bleach.clean(id_esame),
             bleach.clean(nome),
             bleach.clean(descrizione),
             bleach.clean(min_prove),
@@ -44,20 +47,23 @@ def insert_esame(id_esame, nome, descrizione, min_prove, max_prove, docente_resp
             bleach.clean(docente_responsabile)
         )
         cursor.execute(query, values)
+        inserted_id = cursor.fetchone()[0]
         conn.commit()
         connection.close_db(exception=None)
-        return 'Data inserted successfully!'
+        return f'Data inserted successfully! ID: {inserted_id}'
 
     except psycopg2.Error as e:
-        return 'Error inserting data: {}'.format(e)
+        return f'Error inserting data: {e}'
 
-def insert_prova(id_prova, appello, tipo, ricaduta_esame, opzionale, esame_appartenente):
+def insert_prova(appello, tipo, ricaduta_esame, opzionale, esame_appartenente):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
-        query = "INSERT INTO prove (id_prova, appello, tipo, ricaduta_esame, opzionale, esame_appartenente) VALUES (%s, %s, %s, %s, %s, %s)"
+        query = """INSERT INTO prove (appello, tipo, ricaduta_esame, opzionale, esame_appartenente)
+                VALUES (%s, %s, %s, %s, %s)
+                RETURNING id_prova
+                """
         values = (
-            bleach.clean(id_prova),
             bleach.clean(appello),
             bleach.clean(tipo),
             bleach.clean(ricaduta_esame),
@@ -65,18 +71,22 @@ def insert_prova(id_prova, appello, tipo, ricaduta_esame, opzionale, esame_appar
             bleach.clean(esame_appartenente)
         )
         cursor.execute(query, values)
+        inserted_id = cursor.fetchone()[0]
         conn.commit()
         connection.close_db(exception=None)
-        return 'Data inserted successfully!'
+        return f'Data inserted successfully! ID: {inserted_id}'
 
     except psycopg2.Error as e:
-        return 'Error inserting data: {}'.format(e)
+        return f'Error inserting data: {e}'
 
 def insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
-        query = "INSERT INTO prove_sostenuta (id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto) VALUES (%s, %s, %s, %s, %s, %s)"
+        query = """
+                INSERT INTO prove_sostenuta (id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """
         values = (
             bleach.clean(id_studente),
             bleach.clean(id_prova),
@@ -88,16 +98,19 @@ def insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(exception=None)
-        return 'Data inserted successfully!'
+        return f'Data inserted successfully!'
 
     except psycopg2.Error as e:
-        return 'Error inserting data: {}'.format(e)
+        return f'Error inserting data: {e}'
 
 def insert_prova_gestita(id_docente, id_prova):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
-        query = "INSERT INTO prova_gestita (id_docente, id_prova) VALUES (%s, %s)"
+        query = """
+                INSERT INTO prova_gestita (id_docente, id_prova)
+                VALUES (%s, %s)
+                """
         values = (
             bleach.clean(id_docente),
             bleach.clean(id_prova)
@@ -105,7 +118,7 @@ def insert_prova_gestita(id_docente, id_prova):
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(exception=None)
-        return 'Data inserted successfully!'
+        return f'Data inserted successfully!'
 
     except psycopg2.Error as e:
-        return 'Error inserting data: {}'.format(e)
+        return f'Error inserting data: {e}'
