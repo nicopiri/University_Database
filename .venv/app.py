@@ -2,20 +2,14 @@ from flask import Flask
 from flask_cors import CORS
 import insert_data
 from login_controller import api_bp
-from flask import request
+from flask import request, jsonify
 import login_db
+import protected_insert
 
 
 app = Flask("__Database-Project__")
 CORS(app)
 
-@app.route('/insert/<name>/<int:age>', methods=['POST'])
-def insert(name, age):
-    return insert_data.insert(name,age)
-
-@app.route('/get', methods=['GET'])
-def get():    
-    return insert_data.get()
 
 @app.route('/try', methods=['GET'])
 def get_users():
@@ -28,3 +22,15 @@ def get_users():
         return "Logged in successfully"
     else:
         return "Incorrect password"
+    
+@app.route('/insert', methods=['POST'])
+def insert():
+    data = request.get_json()
+    nome = data.get('nome')
+    cognome  = data.get('cognome')
+    cf  = data.get('cf')
+    luogo_nascita  = data.get('luogo')
+    data_nascita  = data.get('nascita')
+    
+    ret = protected_insert.insert_utenti(nome, cognome, cf, luogo_nascita, data_nascita)
+    return jsonify(ret)
