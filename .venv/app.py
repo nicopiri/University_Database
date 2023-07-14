@@ -24,7 +24,7 @@ def get_users():
         return "Incorrect password"
     
 @app.route('/insert', methods=['POST'])
-def insert():
+def user_insert():
     data = request.get_json()
     nome = data.get('nome')
     cognome  = data.get('cognome')
