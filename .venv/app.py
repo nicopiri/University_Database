@@ -5,6 +5,7 @@ from login_controller import api_bp
 from flask import request, jsonify
 import login_db
 import protected_insert
+import delete_by_id
 
 
 app = Flask("__Database-Project__")
@@ -84,3 +85,38 @@ def prova_gestita_insert():
     ret = protected_insert.insert_prova_gestita(id_docente, id_prova)
     return jsonify(ret)
 
+
+@app.route('/delete/utente/<int:id_utente>', methods=['DELETE'])
+def delete_utente(id_utente):
+    ret = delete_by_id.delete_utente_by_id(id_utente)
+    return jsonify(ret)
+
+@app.route('/delete/esame/<int:id_esame>', methods=['DELETE'])
+def delete_esame(id_esame):
+    ret = delete_by_id.delete_esame_by_id(id_esame)
+    return jsonify(ret)
+
+@app.route('/delete/prova/<int:id_prova>', methods=['DELETE'])
+def delete_prova(id_prova):
+    ret = delete_by_id.delete_prova_by_id(id_prova)
+    return jsonify(ret)
+
+@app.route('/delete/prova_sostenuta/studente/<int:id_studente>', methods=['DELETE'])
+def delete_prova_sostenuta_by_id_studente(id_studente):
+    ret = delete_by_id.delete_prova_sostenuta_by_id_studente(id_studente)
+    return jsonify(ret)
+
+@app.route('/delete/prova_gestita/docente/<int:id_docente>', methods=['DELETE'])
+def delete_prova_gestita_by_id_docente(id_docente):
+    ret = delete_by_id.delete_prova_gestita_by_id_docente(id_docente)
+    return jsonify(ret)
+
+@app.route('/delete/prova_sostenuta/prova/<int:id_prova>', methods=['DELETE'])
+def delete_prova_sostenuta_by_id_prova(id_prova):
+    ret = delete_by_id.delete_prova_sostenuta_by_id_prova(id_prova)
+    return jsonify(ret)
+
+@app.route('/delete/prova_gestita/prova/<int:id_prova>', methods=['DELETE'])
+def delete_prova_gestita_by_id_prova(id_prova):
+    ret = delete_by_id.delete_prova_gestita_by_id_prova(id_prova)
+    return jsonify(ret)
