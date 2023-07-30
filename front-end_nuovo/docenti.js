@@ -1,59 +1,96 @@
-// Oggetto Exam per rappresentare un esame
-function Exam(name, requiredTests) {
-  this.name = name;
-  this.requiredTests = requiredTests;
-  this.tests = [];
-}
+document.addEventListener("DOMContentLoaded", function() {
+  const examSuccessMessage = document.getElementById("exam-success-message");
+  const testSuccessMessage = document.getElementById("test-success-message");
 
-// Oggetto Test per rappresentare una prova
-function Test(name, expirationDate, passDate) {
-  this.name = name;
-  this.expirationDate = expirationDate;
-  this.passDate = passDate;
-}
+  // Oggetto Exam per rappresentare un esame
+  function Exam(name, requiredTests) {
+    this.name = name;
+    this.requiredTests = requiredTests;
+    this.tests = [];
+  }
 
-// Creazione di un nuovo esame
-function createExam(name, requiredTests) {
-  var exam = new Exam(name, requiredTests);
-  // Aggiungi l'esame al sistema o salvalo nel database
-  // ...
+  // Oggetto Test per rappresentare una prova
+  function Test(name, expirationDate, passDate) {
+    this.name = name;
+    this.expirationDate = expirationDate;
+    this.passDate = passDate;
+  }
 
-  return exam;
-}
+  // Creazione di un nuovo esame
+  function createExam(name, requiredTests) {
+    // Verifica che i campi siano stati compilati correttamente
+    if (!name || requiredTests < 1) {
+      return false;
+    }
 
-// Creazione di una nuova prova per un esame
-function createTest(exam, name, expirationDate) {
-  var test = new Test(name, expirationDate, null);
-  exam.tests.push(test);
-  // Aggiungi la prova all'esame nel sistema o salvala nel database
-  // ...
+    var exam = new Exam(name, requiredTests);
+    // Aggiungi l'esame al sistema o salvalo nel database
+    // ...
 
-  return test;
-}
+    return exam;
+  }
 
-// Superamento di una prova
-function passTest(test) {
-  test.passDate = new Date();
-  // Aggiorna la data di superamento della prova nel sistema o nel database
-  // ...
+  // Creazione di una nuova prova per un esame
+  function createTest(exam, name, expirationDate) {
+    // Verifica che i campi siano stati compilati correttamente
+    if (!name || !expirationDate) {
+      return false;
+    }
 
-  invalidatePreviousTests(test);
-}
+    var test = new Test(name, expirationDate, null);
+    exam.tests.push(test);
+    // Aggiungi la prova all'esame nel sistema o salvala nel database
+    // ...
 
-// Invalidazione delle prove precedenti
-function invalidatePreviousTests(currentTest) {
-  var exam = currentTest.exam;
-  var previousTests = exam.tests.filter(function(test) {
-    return test.passDate && test.passDate > currentTest.passDate;
-  });
+    return test;
+  }
 
-  previousTests.forEach(function(test) {
-    test.passDate = null;
+  // Superamento di una prova
+  function passTest(test) {
+    test.passDate = new Date();
     // Aggiorna la data di superamento della prova nel sistema o nel database
     // ...
+
+    invalidatePreviousTests(test);
+  }
+
+  // Invalidazione delle prove precedenti
+  function invalidatePreviousTests(currentTest) {
+    var exam = currentTest.exam;
+    var previousTests = exam.tests.filter(function(test) {
+      return test.passDate && test.passDate > currentTest.passDate;
+    });
+
+    previousTests.forEach(function(test) {
+      test.passDate = null;
+      // Aggiorna la data di superamento della prova nel sistema o nel database
+      // ...
+    });
+  }
+
+  // Aggiungi un listener per il click del bottone "Crea" all'interno del form "exam-creation-form"
+  const createExamBtn = document.getElementById("create-exam-btn");
+  createExamBtn.addEventListener("click", function() {
+    const examName = document.getElementById("exam-name").value;
+    const requiredTests = parseInt(document.getElementById("required-tests").value);
+    const exam = createExam(examName, requiredTests);
+    if (exam) {
+      examSuccessMessage.textContent = "Esame creato con successo!";
+    } else {
+      examSuccessMessage.textContent = "Errore nella creazione dell'esame. Riprova.";
+    }
   });
-}
-// Al click sul bottone "Prove", reindirizza allapagina "prove.html"
-document.getElementById('prove-btn').addEventListener('click', function() {
-  window.location.href = 'prove.html';
+
+  // Aggiungi un listener per il click del bottone "Crea" all'interno del form "test-creation-form"
+  const createTestBtn = document.getElementById("create-test-btn");
+  createTestBtn.addEventListener("click", function() {
+    const testName = document.getElementById("test-name").value;
+    const expirationDate = document.getElementById("expiration-date").value;
+    const test = createTest(testName, expirationDate);
+    if (test) {
+      testSuccessMessage.textContent = "Prova creata con successo!";
+    } else {
+      testSuccessMessage.textContent = "Errore nella creazione della prova. Riprova.";
+    }
+  });
 });
