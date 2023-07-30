@@ -1,0 +1,50 @@
+/* Stile per il contenitore principale */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Stile per gli heading (titoli) */
+h2, h3, h4 {
+  color: #333;
+}
+
+/* Stile per i form */
+#exam-creation-form, #test-creation-form {
+  margin-bottom: 30px;
+}
+
+/* Stile per le etichette dei campi di input */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Stile per gli input di tipo testo e numero */
+input[type="text"], input[type="number"], input[type="date"] {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Stile per i bottoni */
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Stile per il messaggio di successo */
+p {
+  color: green;
+  font-weight: bold;
+}
