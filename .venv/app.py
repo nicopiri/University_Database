@@ -1,9 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
-import insert_data
 from login_controller import api_bp
 from flask import request, jsonify
-import login_db
+import encrypt_password
 import protected_insert
 import delete_by_id
 
@@ -12,17 +11,6 @@ app = Flask("__Database-Project__")
 CORS(app)
 
 
-@app.route('/try', methods=['GET'])
-def get_users():
-    id = request.args.get('id')
-    password = request.args.get('password')
-    print(id +" : "+ password)
-    value = login_db.check_password(id)
-    print(value)
-    if value == password:
-        return "Logged in successfully"
-    else:
-        return "Incorrect password"
     
 @app.route('/insert/utente', methods=['POST'])
 def user_insert():
@@ -35,6 +23,33 @@ def user_insert():
     
     ret = protected_insert.insert_utenti(nome, cognome, cf, luogo_nascita, data_nascita)
     return jsonify(ret)
+
+@app.route('/insert/password', methods=['POST'])
+def password_insert():
+    data = request.get_json()
+    id = data.get('id')
+    password = data.get('password')
+
+    if encrypt_password.check_and_encrypt_password(id, password):
+        return 'Password already exists for user with id: {}'.format(id)
+
+    result = encrypt_password.insert_password(id, password)
+    if result == 'Success':
+        return 'Password inserted successfully for user with id: {}'.format(id)
+    else:
+        return result  # Return the error message in case of an error during insertion
+
+@app.route('/update/password', methods=['POST'])
+def password_update():
+    data = request.get_json()
+    id = data.get('id')
+    password = data.get('password')
+
+    result = encrypt_password.update_password(id, password)
+    return result
+
+
+
 
 @app.route('/insert/esame', methods=['POST'])
 def esame_insert():
