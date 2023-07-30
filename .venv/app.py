@@ -1,10 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
-import insert_data
-from login_controller import api_bp
 from flask import request, jsonify
 import login_db
 import protected_insert
+import protected_select
 import delete_by_id
 import encrypt_password
 
@@ -25,6 +24,22 @@ def get_users():
     else:
         return "Incorrect password"
     
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    id = data.get('id')
+    password = data.get('password')
+
+    result = encrypt_password.check_password(id, password)
+    if result == False:
+        return 'Incorrect Password'
+    value= protected_select.get_role_from_id(id)
+    print(value)
+    if value=='Docente':
+        return'Docente'
+    return 'Studente'
+
+    
 @app.route('/insert/utente', methods=['POST'])
 def user_insert():
     data = request.get_json()
@@ -37,16 +52,6 @@ def user_insert():
     ret = protected_insert.insert_utenti(nome, cognome, cf, luogo_nascita, data_nascita)
     return jsonify(ret)
 
-@app.route('/login', methods=['GET'])
-def login():
-    data = request.get_json()
-    id = data.get('id')
-    password = data.get('password')
-
-    result = encrypt_password.check_password(id, password)
-    if result == False:
-        return 'Incorrect Password'
-    return 'Success'
 
 @app.route('/insert/password', methods=['POST'])
 def password_insert():
@@ -122,6 +127,11 @@ def prova_gestita_insert():
     return jsonify(ret)
 
 
+
+
+
+
+
 @app.route('/delete/utente/<int:id_utente>', methods=['DELETE'])
 def delete_utente(id_utente):
     ret = delete_by_id.delete_utente_by_id(id_utente)
@@ -156,3 +166,9 @@ def delete_prova_sostenuta_by_id_prova(id_prova):
 def delete_prova_gestita_by_id_prova(id_prova):
     ret = delete_by_id.delete_prova_gestita_by_id_prova(id_prova)
     return jsonify(ret)
+
+@app.route('/get/utente/<int:id_utente>', methods=['GET'])
+def get_utente(id_utente):
+    val = protected_select.get_dati_utente_from_id(id_utente)
+    print(val)
+    return jsonify(val)
