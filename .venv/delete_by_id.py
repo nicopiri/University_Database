@@ -62,7 +62,7 @@ def delete_prova_sostenuta_by_id_studente(id_studente):
                 DELETE FROM prove_sostenuta
                 WHERE id_studente = %s
                 """
-        values = (id_studente)
+        values = (id_studente,)
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(exception=None)
@@ -79,7 +79,7 @@ def delete_prova_sostenuta_by_id_prova(id_prova):
                 DELETE FROM prove_sostenuta
                 WHERE id_prova = %s
                 """
-        values = (id_prova)
+        values = (id_prova,)
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(exception=None)
@@ -96,7 +96,7 @@ def delete_prova_gestita_by_id_prova(id_prova):
                 DELETE FROM prova_gestita
                 WHERE id_prova = %s
                 """
-        values = (id_prova)
+        values = (id_prova,)
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(exception=None)
@@ -113,7 +113,7 @@ def delete_prova_gestita_by_id_docente(id_docente):
                 DELETE FROM prova_gestita
                 WHERE id_docente = %s
                 """
-        values = (id_docente)
+        values = (id_docente,)
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(exception=None)
