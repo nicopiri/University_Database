@@ -5,6 +5,7 @@ from flask import request, jsonify
 import encrypt_password
 import protected_insert
 import delete_by_id
+import encrypt_password
 
 
 app = Flask("__Database-Project__")
@@ -24,20 +25,29 @@ def user_insert():
     ret = protected_insert.insert_utenti(nome, cognome, cf, luogo_nascita, data_nascita)
     return jsonify(ret)
 
+@app.route('/login', methods=['GET'])
+def login():
+    data = request.get_json()
+    id = data.get('id')
+    password = data.get('password')
+
+    result = encrypt_password.check_password(id, password)
+    if result == False:
+        return 'Incorrect Password'
+    return 'Success'
+
 @app.route('/insert/password', methods=['POST'])
 def password_insert():
     data = request.get_json()
     id = data.get('id')
     password = data.get('password')
-
-    if encrypt_password.check_and_encrypt_password(id, password):
-        return 'Password already exists for user with id: {}'.format(id)
-
+    if encrypt_password.pasword_exist(id) is None:
+        return 'Password exists for user with id : {}'.format(id)
+    
     result = encrypt_password.insert_password(id, password)
     if result == 'Success':
         return 'Password inserted successfully for user with id: {}'.format(id)
-    else:
-        return result  # Return the error message in case of an error during insertion
+
 
 @app.route('/update/password', methods=['POST'])
 def password_update():
@@ -47,8 +57,6 @@ def password_update():
 
     result = encrypt_password.update_password(id, password)
     return result
-
-
 
 
 @app.route('/insert/esame', methods=['POST'])
