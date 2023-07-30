@@ -79,13 +79,13 @@ def insert_prova(appello, tipo, ricaduta_esame, opzionale, esame_appartenente):
     except psycopg2.Error as e:
         return f'Error inserting data: {e}'
 
-def insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto):
+def insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto, valid):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
         query = """
-                INSERT INTO prove_sostenuta (id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO prove_sostenuta (id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto, valid)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
         values = (
             bleach.clean(id_studente),
@@ -93,7 +93,8 @@ def insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento
             bleach.clean(data_appello),
             bleach.clean(data_superamento),
             bleach.clean(data_scadenza),
-            bleach.clean(voto)
+            bleach.clean(voto),
+            bleach.clean(valid)
         )
         cursor.execute(query, values)
         conn.commit()

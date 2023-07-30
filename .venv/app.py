@@ -71,8 +71,9 @@ def prova_sostenuta_insert():
     data_superamento = data.get('superamento')
     data_scadenza = data.get('scadenza')
     voto = data.get('voto')
+    valid = data.get('valid')
 
-    ret = protected_insert.insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto)
+    ret = protected_insert.insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto, valid)
     return jsonify(ret)
 
 
