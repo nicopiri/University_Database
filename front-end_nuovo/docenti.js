@@ -53,3 +53,7 @@ function invalidatePreviousTests(currentTest) {
     // ...
   });
 }
+// Al click sul bottone "Prove", reindirizza allapagina "prove.html"
+document.getElementById('prove-btn').addEventListener('click', function() {
+  window.location.href = 'prove.html';
+});
