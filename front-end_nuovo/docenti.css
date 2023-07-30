@@ -48,3 +48,8 @@ p {
   color: green;
   font-weight: bold;
 }
+
+/* Nascondi i messaggi di successo all'inizio */
+.hidden {
+  display: none;
+}
