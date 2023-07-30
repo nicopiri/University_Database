@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const examSuccessMessage = document.getElementById("exam-success-message");
-  const testSuccessMessage = document.getElementById("test-success-message");
-
   // Oggetto Exam per rappresentare un esame
   function Exam(name, requiredTests) {
     this.name = name;
@@ -68,15 +65,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+  function clearSuccessMessage() {
+    const examSuccessMessage = document.getElementById("exam-success-message");
+    examSuccessMessage.classList.add("hidden");
+    const testSuccessMessage = document.getElementById("test-success-message");
+    testSuccessMessage.classList.add("hidden");
+  }
+
   // Aggiungi un listener per il click del bottone "Crea" all'interno del form "exam-creation-form"
   const createExamBtn = document.getElementById("create-exam-btn");
   createExamBtn.addEventListener("click", function() {
+    clearSuccessMessage();
+
     const examName = document.getElementById("exam-name").value;
     const requiredTests = parseInt(document.getElementById("required-tests").value);
     const exam = createExam(examName, requiredTests);
     if (exam) {
+      const examSuccessMessage = document.getElementById("exam-success-message");
+      examSuccessMessage.classList.remove("hidden");
       examSuccessMessage.textContent = "Esame creato con successo!";
     } else {
+      const examSuccessMessage = document.getElementById("exam-success-message");
       examSuccessMessage.textContent = "Errore nella creazione dell'esame. Riprova.";
     }
   });
@@ -84,12 +93,17 @@ document.addEventListener("DOMContentLoaded", function() {
   // Aggiungi un listener per il click del bottone "Crea" all'interno del form "test-creation-form"
   const createTestBtn = document.getElementById("create-test-btn");
   createTestBtn.addEventListener("click", function() {
+    clearSuccessMessage();
+
     const testName = document.getElementById("test-name").value;
     const expirationDate = document.getElementById("expiration-date").value;
     const test = createTest(testName, expirationDate);
     if (test) {
+      const testSuccessMessage = document.getElementById("test-success-message");
+      testSuccessMessage.classList.remove("hidden");
       testSuccessMessage.textContent = "Prova creata con successo!";
     } else {
+      const testSuccessMessage = document.getElementById("test-success-message");
       testSuccessMessage.textContent = "Errore nella creazione della prova. Riprova.";
     }
   });
