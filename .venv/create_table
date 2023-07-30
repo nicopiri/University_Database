@@ -55,3 +55,10 @@ CREATE TABLE prova_gestita (
     FOREIGN KEY (id_prova) REFERENCES prove(id_prova),
     FOREIGN KEY (id_docente) REFERENCES DOCENTI(id_docente)
 )
+
+CREATE TABLE login(
+    id INT PRIMARY KEY,
+    password varchar(255),
+    salt varchar(255),
+    FOREIGN KEY (id) REFERENCES utenti(id_utente)
+)
