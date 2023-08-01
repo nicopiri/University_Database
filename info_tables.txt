@@ -76,3 +76,10 @@ Table: utenti
 | cognome         | character varying | 50                     | YES        |
 | codice_fiscale  | character varying | 16                     | YES        |
 +-----------------+------------------+------------------------+------------+
+Table: esami_registrati
+column_name	data_type	is_nullable
+id_esame	integer		NO
+id_utente	integer		NO
+superato	boolean		NO
+voto	numeric		YES
+data	date		YES
