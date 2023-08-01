@@ -18,7 +18,8 @@ document.getElementById("reset-password-form").addEventListener("submit", functi
 
   var resetPasswordData = {
     id: studentId,
-    password: newPassword
+    nuova_password: newPassword,
+    vecchia_password: oldPassword
   };
 
   fetch('http://127.0.0.1:5000/update/password', {
@@ -29,6 +30,7 @@ document.getElementById("reset-password-form").addEventListener("submit", functi
     body: JSON.stringify(resetPasswordData)
   })
     .then(response => {
+    console.log(resetPasswordData)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

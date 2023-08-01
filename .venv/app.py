@@ -57,8 +57,7 @@ def user_insert():
 def password_insert():
     data = request.get_json()
     id = data.get('id')
-    vecchia_password = data.get('password')
-    nuova_password = data.get('')
+    password = data.get('password')
     if encrypt_password.pasword_exist(id) is None:
         return 'Password exists for user with id : {}'.format(id)
     
@@ -70,10 +69,12 @@ def password_insert():
 @app.route('/update/password', methods=['POST'])
 def password_update():
     data = request.get_json()
+    print(data)
     id = data.get('id')
-    password = data.get('password')
-
-    result = encrypt_password.update_password(id, password)
+    vecchia_password = data.get('vecchia_password')
+    nuova_password = data.get('nuova_password')
+    
+    result = encrypt_password.update_password(id, vecchia_password, nuova_password)
     return result
 
 
