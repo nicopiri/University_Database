@@ -1,38 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pagina Docenti - Gestione Esami</title>
-  <link rel="stylesheet" type="text/css" href="dopo_login_docenti.css">
+  <title>Area personale docente</title>
 </head>
 <body>
-  <div class="container">
-    <h2>Area riservata docente</h2>
-    <h3>Gestione Esami</h3>
+  <h1>Area personale docente</h1>
 
-    <div id="exam-creation-form">
-      <h4>Crea nuovo esame</h4>
-      <label for="exam-name">Nome esame:</label>
-      <input type="text" id="exam-name" placeholder="Inserisci il nome dell'esame">
-      <label for="required-tests">Numero di prove richieste:</label>
-      <input type="number" id="required-tests" min="1">
-      <button id="create-exam-btn">Crea</button>
-    </div>
+  
+  <select id="menu" onchange="redirectToSelectedOption()">
+    <option value="">Seleziona una voce</option>
+    <option value="home.html">Home</option>
+    <option value="didattica.html">Didattica</option>
+  </select>
 
-    <div id="test-creation-form">
-      <h4>Crea nuova prova</h4>
-      <label for="test-name">Nome prova:</label>
-      <input type="text" id="test-name" placeholder="Inserisci il nome della prova">
-      <label for="expiration-date">Data di scadenza:</label>
-      <input type="date" id="expiration-date">
-      <button id="create-test-btn">Crea</button>
-    </div>
-
-    
-
-    <button id="logout-btn">Logout</button>
-  </div>
-
-  <script src="dopo_login_docenti.js"></script>
+  <script>
+    function redirectToSelectedOption() {
+      const selectedOption = document.getElementById('menu').value;
+      if (selectedOption !== '') {
+        window.location.href = selectedOption;
+      }
+    }
+  </script>
 </body>
 </html>
 
