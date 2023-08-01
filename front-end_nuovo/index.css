@@ -1,8 +1,14 @@
-.container {
+.container { 
   width: 300px;
-  margin: 0 auto;
+  margin: 0;
   padding: 20px;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: left;
+  margin-right: auto;
+  margin-left: 165px;
+  margin-top: 160px;
+  border: 1px solid transparent; /*toglie i bordi dal container*/
 }
 
 h2 {
@@ -16,6 +22,8 @@ h2 {
 label, input {
   display: block;
   width: 100%;
+  border-radius: 10px; /*bordi username psw*/
+  border: none; /*rimuovi il bordo di username e psw*/
 }
 
 button[type="submit"] {
@@ -25,8 +33,20 @@ button[type="submit"] {
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 button[type="submit"]:hover {
   background-color: #45a049;
+}
+label[for="username"],
+label[for="password"] {
+	
+  display: block;
+  font-weight: bold; /* Imposta il testo del label in grassetto */
+}
+body {
+  /* Definiamo l'immagine di sfondo e la posizione */
+  background-image: url('sfondo.png');
+  background-repeat: no-repeat;
 }
