@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Prove sostenute</title>
-  <link rel="stylesheet" type="text/css" href="prova_sostenuta.css">
+  <title>Storico prove sostenute</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Prove sostenute</h2>
-    <div id="menu-container">
-    </div>
-    <div id="content-container">
-      <section id="esame">
-        <label for="id_studente">ID Studente:</label>
-        <input type="text" id="id_studente" name="id_studente" required><br>
-
-        <label for="id_prova">ID Prova:</label>
-        <input type="text" id="id_prova" name="id_prova" required><br>
-
-        <label for="data_appello">Data Appello:</label>
-        <input type="date" id="data_appello" name="data_appello" required><br>
-
-        <label for="data_superamento">Data Superamento:</label>
-        <input type="date" id="data_superamento" name="data_superamento"><br>
-
-        <label for="data_scadenza">Data Scadenza:</label>
-        <input type="date" id="data_scadenza" name="data_scadenza"><br>
-
-        <label for="voto">Voto:</label>
-        <input type="number" id="voto" name="voto" min="18" max="30"><br>
-
-        <label for="valid">Valido:</label>
-        <input type="checkbox" id="valid" name="valid"><br>
-      </section>
-    </div>
-  </div>
+  <h2>Storico prove sostenute</h2>
+  <table>
+    <tr>
+      <th>Descrizione</th>
+      <th>Data</th>
+      <th>Esito</th>
+      <th>Voto</th>
+      
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      
+    </tr>
+    <!-- Aggiungi altre righe con i dati degli studenti qui -->
+  </table>
+</body>
+</html>
 
