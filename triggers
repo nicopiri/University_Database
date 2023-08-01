@@ -1,0 +1,72 @@
+/*
+ogni volta che esegui una SELECT sulla tabella "prove_sostenute",
+ il trigger verrà attivato e aggiornerà la colonna "valid" per tutte 
+ le righe in cui la data di scadenza è stata superata.
+ */
+CREATE OR REPLACE FUNCTION update_valid_on_select()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.data_scadenza < CURRENT_DATE THEN
+    NEW.valid = false;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_valid_trigger
+BEFORE INSERT OR UPDATE ON prove_sostenuta
+FOR EACH ROW
+EXECUTE FUNCTION update_valid_on_select();
+
+/*
+ogni volta che viene aggiunta una nuova riga nella tabella "prove_sostenute",
+ il trigger seleziona tutte le righe con lo stesso "id_prova" e lo stesso
+  "id_studente" ma con una "data_appello" precedente alla nuova riga e le imposta a "valid = false".
+  */
+  CREATE OR REPLACE FUNCTION update_old_prove_sostenute()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE prove_sostenuta
+  SET valid = false
+  WHERE
+    id_prova = NEW.id_prova
+    AND id_studente = NEW.id_studente
+    AND data_appello < NEW.data_appello;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_old_prove_sostenute_trigger
+AFTER INSERT ON prove_sostenuta
+FOR EACH ROW
+EXECUTE FUNCTION update_old_prove_sostenute();
+
+--QUERY DA INSERIRE
+
+/*
+permette di vedere quali studenti sono idonei per aver registrato un esame tramite l'id_esame
+*/
+
+SELECT u.id_utente, u.nome, u.cognome
+FROM utenti u
+INNER JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
+INNER JOIN prove p ON ps.id_prova = p.id_prova
+INNER JOIN esami e ON p.esame_appartenente = e.id_esame
+WHERE p.opzionale = FALSE
+AND ps.valid = TRUE
+AND e.id_esame = 'ID_ESAME'
+AND p.ricaduta_esame = 'media'
+GROUP BY u.id_utente, u.nome, u.cognome
+HAVING COUNT(ps.id_prova) >= e.min_prove
+AND AVG(ps.voto) >= 18;
+
+--APPELLI= vedere quali studenti hanno superato una determinata prova tramite l'id
+
+SELECT u.id_utente, u.nome, u.cognome
+FROM utenti u
+JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
+WHERE ps.valid = true
+  AND ps.voto >= 18
+  AND ps.id_prova = 'ID_DELLA_PROVA'
+

@@ -39,6 +39,9 @@ Table: prove
 | ricaduta_esame     | character varying | 50                     | YES        |
 +--------------------+------------------+------------------------+------------+
 
+il tipo può essere: scritto, orale, progetto
+la ricaduta_esame può essere: media, bonus, idoneita
+
 Table: prove_sostenuta
 +------------------+------------------+------------------------+------------+
 | column_name      | data_type        | character_maximum_length | is_nullable |
