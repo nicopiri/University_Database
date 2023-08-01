@@ -35,7 +35,7 @@ document.getElementById("reset-password-form").addEventListener("submit", resetP
 // Aggiungi l'evento click al pulsante "Cambio password"
 document.getElementById("cambio-password-btn").addEventListener("click", function() {
   // Reindirizza l'utente alla pagina "reimposta_password.html"
-  window.location.href = "reimposta_password.html";
+  window.location.href = "reset_password.html";
 });
 // Aggiungi l'evento submit al form per la reimpostazione della password
 document.getElementById("reset-password-form").addEventListener("submit", function(event) {
@@ -45,5 +45,5 @@ document.getElementById("reset-password-form").addEventListener("submit", functi
 // Aggiungi l'evento click al pulsante "Logout"
 document.getElementById("logout-btn").addEventListener("click", function() {
   // Reindirizza l'utente alla pagina "index.html" quando viene cliccato il pulsante "Logout"
-  window.location.href = "index.html";
+  window.location.href = "Login.html";
 });
