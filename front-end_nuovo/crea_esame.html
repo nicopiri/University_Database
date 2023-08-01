@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestione Prove</title>
+</head>
+<body>
+  <h2>Esami creati</h2>
+  <div id="prove-container">
+    <!-- Qui verranno inserite le prove dinamicamente -->
+  </div>
+
+  <script>
+    // Funzione per ottenere i dati delle prove dall'API e popolare la pagina
+    async function getAndDisplayProve() {
+      try {
+        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere le prove
+        const data = await response.json();
+
+        const proveContainer = document.getElementById('prove-container');
+        proveContainer.innerHTML = ''; // Svuota il contenuto precedente per evitare duplicati
+
+        // Cicla attraverso i dati delle prove e crea gli elementi HTML dinamici
+        data.forEach(prova => {
+          const provaElement = document.createElement('div');
+          provaElement.innerHTML = `
+            <h3>${prova.descrizione}</h3>
+            <p>Data Prova: ${prova.data_prova}</p>
+            <p>Data Scadenza: ${prova.data_scadenza}</p>
+            <hr>
+          `;
+          proveContainer.appendChild(provaElement);
+        });
+      } catch (error) {
+        console.error('Errore durante il recupero dei dati delle prove:', error);
+      }
+    }
+
+    // Chiama la funzione per ottenere e visualizzare le prove all'avvio della pagina
+    getAndDisplayProve();
+  </script>
+</body>
+</html>
