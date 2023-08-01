@@ -22,7 +22,7 @@ def insert_utenti(nome, cognome, codice_fiscale, luogo_nascita, data_nascita):
         cursor.execute(query, values)
         inserted_id = cursor.fetchone()[0]
         conn.commit()
-        connection.close_db(exception=None)
+        connection.close_db(conn)
         return f'Data inserted successfully! ID: {inserted_id}'
 
     except psycopg2.Error as e:
@@ -49,7 +49,7 @@ def insert_esame(nome, descrizione, min_prove, max_prove, docente_responsabile):
         cursor.execute(query, values)
         inserted_id = cursor.fetchone()[0]
         conn.commit()
-        connection.close_db(exception=None)
+        connection.close_db(conn)
         return f'Data inserted successfully! ID: {inserted_id}'
 
     except psycopg2.Error as e:
@@ -73,7 +73,7 @@ def insert_prova(appello, tipo, ricaduta_esame, opzionale, esame_appartenente):
         cursor.execute(query, values)
         inserted_id = cursor.fetchone()[0]
         conn.commit()
-        connection.close_db(exception=None)
+        connection.close_db(conn)
         return f'Data inserted successfully! ID: {inserted_id}'
 
     except psycopg2.Error as e:
@@ -98,7 +98,7 @@ def insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento
         )
         cursor.execute(query, values)
         conn.commit()
-        connection.close_db(exception=None)
+        connection.close_db(conn)
         return f'Data inserted successfully!'
 
     except psycopg2.Error as e:
@@ -118,8 +118,32 @@ def insert_prova_gestita(id_docente, id_prova):
         )
         cursor.execute(query, values)
         conn.commit()
-        connection.close_db(exception=None)
+        connection.close_db(conn)
         return f'Data inserted successfully!'
 
     except psycopg2.Error as e:
         return f'Error inserting data: {e}'
+    
+def insert_esami_registrati(id_esame, id_utente, superato, voto, data):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        query = """
+                INSERT INTO esami_registrati (id_esame, id_utente, superato, voto, data)
+                VALUES (%s, %s, %s, %s, %s)
+                """
+        values = (
+            bleach.clean(id_esame),
+            bleach.clean(id_utente),
+            bleach.clean(superato),
+            bleach.clean(voto),
+            bleach.clean(data)
+        )
+        cursor.execute(query, values)
+        conn.commit()
+        connection.close_db(conn)
+        return f'Data inserted successfully!'
+
+    except psycopg2.Error as e:
+        return f'Error inserting data: {e}'
+
