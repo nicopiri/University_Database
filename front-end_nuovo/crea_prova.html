@@ -2,41 +2,57 @@
 <html>
 <head>
   <title>Gestione Prove</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
 <body>
-  <h2>Prove create</h2>
-  <div id="prove-container">
-    <!-- Qui verranno inserite le prove dinamicamente -->
-  </div>
+  <h2>Gestione Prove</h2>
+  <table id="prove-table">
+    <tr>
+      <th>Data Prova</th>
+      <th>Data Scadenza</th>
+    </tr>
+  </table>
 
   <script>
-    // Funzione per ottenere i dati delle prove dall'API e popolare la pagina
-    async function getAndDisplayProve() {
+    async function populateProveTable() {
       try {
-        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere le prove
+        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere i dati delle prove
         const data = await response.json();
 
-        const proveContainer = document.getElementById('prove-container');
-        proveContainer.innerHTML = ''; // Svuota il contenuto precedente per evitare duplicati
+        const proveTable = document.getElementById('prove-table');
 
-        // Cicla attraverso i dati delle prove e crea gli elementi HTML dinamici
+        // Cicla attraverso i dati delle prove e crea le righe della tabella dinamicamente
         data.forEach(prova => {
-          const provaElement = document.createElement('div');
-          provaElement.innerHTML = `
-            <h3>${prova.descrizione}</h3>
-            <p>Data Prova: ${prova.data_prova}</p>
-            <p>Data Scadenza: ${prova.data_scadenza}</p>
-            <hr>
-          `;
-          proveContainer.appendChild(provaElement);
+          const row = proveTable.insertRow();
+
+          const dataProvaCell = row.insertCell();
+          dataProvaCell.textContent = prova.data_prova;
+
+          const dataScadenzaCell = row.insertCell();
+          dataScadenzaCell.textContent = prova.data_scadenza;
         });
       } catch (error) {
         console.error('Errore durante il recupero dei dati delle prove:', error);
       }
     }
 
-    // Chiama la funzione per ottenere e visualizzare le prove all'avvio della pagina
-    getAndDisplayProve();
+    // Chiama la funzione per popolare la tabella all'avvio della pagina
+    populateProveTable();
   </script>
 </body>
 </html>
+
+
