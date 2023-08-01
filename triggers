@@ -42,31 +42,3 @@ AFTER INSERT ON prove_sostenuta
 FOR EACH ROW
 EXECUTE FUNCTION update_old_prove_sostenute();
 
---QUERY DA INSERIRE
-
-/*
-permette di vedere quali studenti sono idonei per aver registrato un esame tramite l'id_esame
-*/
-
-SELECT u.id_utente, u.nome, u.cognome
-FROM utenti u
-INNER JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
-INNER JOIN prove p ON ps.id_prova = p.id_prova
-INNER JOIN esami e ON p.esame_appartenente = e.id_esame
-WHERE p.opzionale = FALSE
-AND ps.valid = TRUE
-AND e.id_esame = 'ID_ESAME'
-AND p.ricaduta_esame = 'media'
-GROUP BY u.id_utente, u.nome, u.cognome
-HAVING COUNT(ps.id_prova) >= e.min_prove
-AND AVG(ps.voto) >= 18;
-
---APPELLI= vedere quali studenti hanno superato una determinata prova tramite l'id
-
-SELECT u.id_utente, u.nome, u.cognome
-FROM utenti u
-JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
-WHERE ps.valid = true
-  AND ps.voto >= 18
-  AND ps.id_prova = 'ID_DELLA_PROVA'
-
