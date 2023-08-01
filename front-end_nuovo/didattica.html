@@ -1,46 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tabella Esami</title>
-  <link rel="stylesheet" type="text/css" href="didattica.css">
+  <title>Attività didattica</title>
 </head>
 <body>
-  <h1>Lista appelli d'esame</h1>
+  <h2>Attività didattica</h2>
+  <a href="lista_appelli.html">
+    <button id="lista-appelli-btn" onclick="redirectToAppelliPage()">Lista Appelli</button>
+  </a>
+  
+  <!-- Aggiungiamo il bottone "Crea Prova" -->
+  <button id="crea-prova-btn">Crea Prova</button>
 
-  <table>
-    <tr>
-      <th>Descrizione</th>
-      <th>Data</th>
-	  <th>Studenti iscritti</th>
-      <th>Esiti inseriti</th>
-	  
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-	<tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-   
-  </table>
+  <!-- Aggiungiamo il bottone "Crea Esame" -->
+  <button id="crea-esame-btn">Crea Esame</button>
 
+  <script>
+    function redirectToAppelliPage() {
+      window.location.href = "appelli.html";
+    }
+  </script>
 </body>
 </html>
 
-  
 
 
