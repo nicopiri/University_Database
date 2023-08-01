@@ -23,7 +23,18 @@ def insert_password(id_utente, password):
     return login_db.insert_password(id_utente, hashed_password, salt)
 
 def update_password(id_utente, password):
-    return login_db.update_password(id_utente, encrypt_password(password))
+    print(id_utente)
+    print(password)
+    saved_pw_bytes, salt_bytes = login_db.get_hashed_password(id_utente)
+    if saved_pw_bytes is None:
+        return 'User not Exist'
+    saved_pw = bytes.fromhex(saved_pw_bytes[2:])
+    salt = bytes.fromhex(salt_bytes[2:])
+    encrypt_pw = bcrypt.hashpw(password.encode('utf-8'), salt)
+    if saved_pw == encrypt_pw:
+       login_db.update_password(id_utente, encrypt_password(password),salt)
+       return 'Password Updated'
+    return  'Incorrect Password'
 
 def check_password(id_utente, password):
     saved_pw_bytes, salt_bytes = login_db.get_hashed_password(id_utente)

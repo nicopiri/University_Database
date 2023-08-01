@@ -1,34 +1,43 @@
-// Funzione per reimpostare la password
-function resetPassword(event) {
-  event.preventDefault(); // Previeni il comportamento predefinito del form (submit)
+document.getElementById("reset-password-form").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent the form from submitting
 
-  // Otteniamo la nuova password dal campo di input
+  // Get the values from the form
+  var oldPassword = document.getElementById("old-password").value;
   var newPassword = document.getElementById("new-password").value;
+  var confirmNewPassword = document.getElementById("confirm-new-password").value;
 
-  // Esegui la richiesta al server per reimpostare la password
-  fetch('/reset-password', {
+  // Assuming you have the student id from the URL query parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  var studentId = urlParams.get('id');
+
+  // Validate if the new password and confirm password match
+  if (newPassword !== confirmNewPassword) {
+    console.log("New password and confirm password do not match.");
+    return;
+  }
+
+  var resetPasswordData = {
+    id: studentId,
+    password: newPassword
+  };
+
+  fetch('http://127.0.0.1:5000/update/password', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ newPassword: newPassword })
+    body: JSON.stringify(resetPasswordData)
   })
-    .then(function (response) {
-      if (response.ok) {
-        // Reset password eseguito con successo, puoi gestire la risposta come desideri
-        alert("Richiesta di reimpostazione password inviata. Controlla la tua email per ulteriori istruzioni.");
-      } else {
-        // Reset password non riuscito, gestisci l'errore come desideri
-        alert("Impossibile reimpostare la password. Riprova più tardi.");
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      return response.text();
     })
-    .catch(function (error) {
-      // Gestisci gli errori di connessione o altre eccezioni
-      console.error('Error:', error);
-      alert("Si è verificato un errore. Riprova più tardi.");
+    .then(data => {
+      console.log(data); // Password update success message, if any
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
     });
-}
-
-// Aggiungi l'evento di submit al form di reimpostazione password
-document.getElementById("reset-password-form").addEventListener("submit", resetPassword);
-
+});

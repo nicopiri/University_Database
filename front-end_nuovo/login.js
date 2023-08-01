@@ -25,14 +25,25 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     })
     .then(data => { 
       if (data === 'Studente') {
-        window.location.href = 'dopo_login.html';
-      } else if(data === 'Docente') {
-        window.location.href = 'docenti.html';
-      }else {
-        console.log('Incorrect Password');
+        // Redirect to dopo_login_studenti.html with student id as query parameter
+        window.location.href = `dopo_login_studenti.html?id=${id}`;
+      } else if (data === 'Docente') {
+        window.location.href = 'dopo_login_docenti.html';
+      } else {
+        // Incorrect password or other error message from the API
+        showErrorMessage('Incorrect Password');
       }
     })
     .catch(error => {
       console.error('Fetch error:', error);
+      // Network or other fetch errors
+      showErrorMessage('Error occurred. Please try again later.');
     });
 });
+
+// Function to show error message
+function showErrorMessage(message) {
+  var errorDiv = document.getElementById('error-message');
+  errorDiv.textContent = message;
+  errorDiv.style.display = 'block';
+}

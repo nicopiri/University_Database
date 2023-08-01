@@ -1,49 +1,71 @@
-// Funzione per reimpostare la password
-function resetPassword(event) {
-  event.preventDefault(); // Previeni il comportamento predefinito del form (submit)
+// Get the student id from the URL query parameters
+const urlParams = new URLSearchParams(window.location.search);
+const studentId = urlParams.get('id');
 
-  // Otteniamo la nuova password dal campo di input
-  var newPassword = document.getElementById("new-password").value;
-
-  // Esegui la richiesta al server per reimpostare la password
-  fetch('/reset-password', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ newPassword: newPassword })
-  })
-    .then(function (response) {
-      if (response.ok) {
-        // Reset password eseguito con successo, puoi gestire la risposta come desideri
-        alert("Richiesta di reimpostazione password inviata. Controlla la tua email per ulteriori istruzioni.");
-      } else {
-        // Reset password non riuscito, gestisci l'errore come desideri
-        alert("Impossibile reimpostare la password. Riprova più tardi.");
+// Function to fetch student data and populate the HTML
+function fetchAndPopulateStudentData(studentId) {
+  return fetch(`http://127.0.0.1:5000/get/utente/${studentId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      return response.json();
     })
-    .catch(function (error) {
-      // Gestisci gli errori di connessione o altre eccezioni
-      console.error('Error:', error);
-      alert("Si è verificato un errore. Riprova più tardi.");
+    .then(studentData => {
+      populateStudentData(studentData);
+    })
+    .catch(error => {
+      console.error('Error fetching student data:', error);
     });
 }
 
-// Aggiungi l'evento di submit al form di reimpostazione password
-document.getElementById("reset-password-form").addEventListener("submit", resetPassword);
+function populateStudentData(studentData) {
+  const menuContainer = document.getElementById("menu-container");
+  menuContainer.innerHTML = ''; // Clear the container before adding new data
 
-// Aggiungi l'evento click al pulsante "Cambio password"
-document.getElementById("cambio-password-btn").addEventListener("click", function() {
-  // Reindirizza l'utente alla pagina "reimposta_password.html"
-  window.location.href = "reset_password.html";
-});
-// Aggiungi l'evento submit al form per la reimpostazione della password
-document.getElementById("reset-password-form").addEventListener("submit", function(event) {
-  event.preventDefault(); // Previeni il comportamento predefinito del form (submit)
+  const studentInfoList = document.createElement("ul");
+  studentInfoList.classList.add("student-info");
+
+  const studentProperties = [
+    "Student ID",
+    "Nome",
+    "Cognome",
+    "CF",
+    "LuogoNascita",
+    "DataNascita",
+    "DataImmatricolazione",
+  ];
+
+  for (let i = 0; i < studentProperties.length; i++) {
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `<strong>${studentProperties[i]}:</strong> ${studentData[i]}`;
+    studentInfoList.appendChild(listItem);
+  }
+
+  menuContainer.appendChild(studentInfoList);
+}
+
+
+
+
+// Listen to button clicks and navigate to other pages
+document.getElementById("prove-btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = `prove.html?id=${studentId}`;
 });
 
-// Aggiungi l'evento click al pulsante "Logout"
-document.getElementById("logout-btn").addEventListener("click", function() {
-  // Reindirizza l'utente alla pagina "index.html" quando viene cliccato il pulsante "Logout"
-  window.location.href = "Login.html";
+document.getElementById("cambio-password-btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = `reset_password.html?id=${studentId}`;
 });
+
+document.getElementById("logout-btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = "login.html";
+});
+
+// Check if studentId is available
+if (studentId) {
+  // Fetch student data and populate the HTML
+  fetchAndPopulateStudentData(studentId);
+}

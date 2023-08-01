@@ -46,3 +46,42 @@ body {
   background-repeat: no-repeat;
 }
 
+/* Add this CSS to dopo_login_studenti.css */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+}
+
+#menu-container {
+  margin-bottom: 20px;
+}
+
+#menu-container p {
+  margin: 5px 0;
+}
+
+#content-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content-container button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#content-container button:hover {
+  background-color: #0056b3;
+}

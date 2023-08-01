@@ -57,7 +57,8 @@ def user_insert():
 def password_insert():
     data = request.get_json()
     id = data.get('id')
-    password = data.get('password')
+    vecchia_password = data.get('password')
+    nuova_password = data.get('')
     if encrypt_password.pasword_exist(id) is None:
         return 'Password exists for user with id : {}'.format(id)
     
@@ -127,17 +128,11 @@ def prova_gestita_insert():
     ret = protected_insert.insert_prova_gestita(id_docente, id_prova)
     return jsonify(ret)
 
-@app.route('/insert/esami_registrati', methods=['POST'])
-def esami_registrati_insert():
-    data = request.get_json()
-    id_esame = data.get('esame')
-    id_utente = data.get('studente')
-    superato = data.get('superato')
-    voto = data.get('voto')
-    data = data.get('data')
 
-    ret =  protected_insert.insert_esami_registrati(id_esame, id_utente, superato, voto, data)
-    return jsonify(ret)
+
+
+
+
 
 @app.route('/delete/utente/<int:id_utente>', methods=['DELETE'])
 def delete_utente(id_utente):
@@ -174,10 +169,11 @@ def delete_prova_gestita_by_id_prova(id_prova):
     ret = delete_by_id.delete_prova_gestita_by_id_prova(id_prova)
     return jsonify(ret)
 
+
+
 @app.route('/get/utente/<int:id_utente>', methods=['GET'])
 def get_utente(id_utente):
     val = protected_select.get_dati_utente_from_id(id_utente)
-    print(val)
     return jsonify(val)
 
 @app.route('/delete/esami_registrati/esame/<int:id_esame>', methods=['DELETE'])
