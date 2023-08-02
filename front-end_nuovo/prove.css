@@ -16,18 +16,17 @@ h2 {
   text-align: center;
 }
 
-#menu-container {
-  /* Stile per il contenitore del menu (se presente) */
+table {
+  border-collapse: collapse;
+  width: 100%;
 }
 
-#content-container {
-  /* Stile per il contenitore del contenuto principale */
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
 }
 
-section#esami {
-  margin-top: 20px;
-}
-
-section#esami p {
-  margin: 5px 0;
+th {
+  background-color: #f2f2f2;
 }

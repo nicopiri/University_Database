@@ -2,62 +2,21 @@
 <html>
 <head>
   <title>Storico Prove sostenute</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="prove.css">
 </head>
 <body>
-  <h2>Storico prove sostenute</h2>
-  <table id="prove-table">
-    <tr>
-      <th>Id_prova</th>
-      <th>Appello</th>
-	  <th>Opzionale</th>
-	  <th>Esame a_appartenente</th>
-	  <th>Tipo</th>
-	  <th>Ricaduta_esame</th>
-    </tr>
-  </table>
-
-  <script>
-    async function populateProveTable() {
-      try {
-        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere i dati delle prove
-        const data = await response.json();
-
-        const proveTable = document.getElementById('prove-table');
-
-        // Cicla attraverso i dati delle prove e crea le righe della tabella dinamicamente
-        data.forEach(prova => {
-          const row = proveTable.insertRow();
-
-          const descrizioneCell = row.insertCell();
-          descrizioneCell.textContent = prova.descrizione;
-
-          const dataCell = row.insertCell();
-          dataCell.textContent = prova.data;
-        });
-      } catch (error) {
-        console.error('Errore durante il recupero dei dati delle prove:', error);
-      }
-    }
-
-    // Chiama la funzione per popolare la tabella all'avvio della pagina
-    populateProveTable();
-  </script>
+  <div class="container">
+    <h2>Storico prove sostenute</h2>
+    <table id="prove-table">
+      <tr>
+        <th>Id_prova</th>
+        <th>Appello</th>
+        <th>Opzionale</th>
+        <th>Esame a_appartenente</th>
+        <th>Tipo</th>
+      </tr>
+    </table>
+  </div>
+  <script src="prove.js"></script>
 </body>
 </html>
-
-
-

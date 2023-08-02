@@ -1,69 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Prove valide sostenute</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
+  <title>Storico Prove Sostenute</title>
+  <link rel="stylesheet" type="text/css" href="prova_sostenuta.css">
 </head>
 <body>
-  <h2>Prove valide sostenute</h2>
-  <table id="prove-table">
+  <h2>Storico Prove Sostenute</h2>
+  
+  <label for="entries-per-page">Entries per page:</label>
+  <select id="entries-per-page">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="40">40</option>
+    <option value="50">50</option>
+  </select>
+  
+  <table id="prove-sostenute-table">
     <tr>
-	<th>Id_studente</th>
-      <th>Id_prova</th>
-      <th>Data Appello</th>
-	  <th>Data Superamento</th>
-      <th>Data Scadenza</th>
+      <th>Prova ID</th>
+      <th>Data Superamento</th>
       <th>Esito</th>
+      <th>Data Valutazione</th>
+      <th>Voto</th>
+      <th>Valutazione</th>
     </tr>
-    <!-- Aggiungi altre righe con i dati delle prove qui -->
+    <!-- Table rows will be added dynamically using JavaScript -->
   </table>
 
-  <script>
-    async function populateProveTable() {
-      try {
-        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere i dati delle prove
-        const data = await response.json();
+  <div id="pagination">
+    <button id="prev-page-btn">Previous Page</button>
+    <button id="next-page-btn">Next Page</button>
+  </div>
 
-        const proveTable = document.getElementById('prove-table');
-
-        // Cicla attraverso i dati delle prove e crea le righe della tabella dinamicamente
-        data.forEach(prova => {
-          const row = proveTable.insertRow();
-
-          const descrizioneCell = row.insertCell();
-          descrizioneCell.textContent = prova.descrizione;
-
-          const dataCell = row.insertCell();
-          dataCell.textContent = prova.data;
-
-          const esitoCell = row.insertCell();
-          esitoCell.textContent = prova.esito;
-
-          const votoCell = row.insertCell();
-          votoCell.textContent = prova.voto;
-        });
-      } catch (error) {
-        console.error('Errore durante il recupero dei dati delle prove:', error);
-      }
-    }
-
-    // Chiama la funzione per popolare la tabella all'avvio della pagina
-    populateProveTable();
-  </script>
+  <script src="prova_sostenuta.js"></script>
 </body>
 </html>
-
-

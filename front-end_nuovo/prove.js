@@ -1,22 +1,32 @@
-// Funzione per gestire l'invio del form
-document.getElementById('proveForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+async function populateProveTable() {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/get/prove_valide/3'); // Update with your API URL
+      const data = await response.json();
+  
+      const proveTable = document.getElementById('prove-table');
+  
 
-    // Ottieni i valori inseriti nei campi del form
-    const id = document.getElementById('id').value;
-    const appello = document.getElementById('appello').value;
-    const tipologia = document.getElementById('tipologia').value;
-    const esame = document.getElementById('esame').value;
-
-    // Puoi fare qualcosa con i dati, ad esempio inviarli a un server tramite una richiesta AJAX
-
-    // Esempio di output dei dati nella console
-    console.log('ID:', id);
-    console.log('Appello:', appello);
-    console.log('Tipologia:', tipologia);
-    console.log('Esame:', esame);
-
-    // Pulisci i campi del form dopo aver salvato i dati
-    document.getElementById('proveForm').reset();
-});
-
+  
+      // Loop through the data and create table rows dynamically
+      data.forEach(prova => {
+        const row = proveTable.insertRow();
+  
+        for (const cellData of prova) {
+          const cell = row.insertCell();
+          if (typeof cellData === 'boolean') {
+            cell.textContent = cellData ? 'Yes' : 'No';
+          } else if (typeof cellData === 'object') {
+            cell.textContent = new Date(cellData).toLocaleDateString();
+          } else {
+            cell.textContent = cellData;
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  
+  // Call the function to populate the table when the page loads
+  populateProveTable();
+  

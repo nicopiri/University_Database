@@ -1,8 +1,7 @@
-// Get the student id from the URL query parameters
 const urlParams = new URLSearchParams(window.location.search);
 const studentId = urlParams.get('id');
 
-// Function to fetch student data and populate the HTML
+// Fetch student data and populate the HTML
 function fetchAndPopulateStudentData(studentId) {
   return fetch(`http://127.0.0.1:5000/get/utente/${studentId}`)
     .then(response => {
@@ -19,9 +18,10 @@ function fetchAndPopulateStudentData(studentId) {
     });
 }
 
+// Populate student data
 function populateStudentData(studentData) {
   const menuContainer = document.getElementById("menu-container");
-  menuContainer.innerHTML = ''; // Clear the container before adding new data
+  menuContainer.innerHTML = '';
 
   const studentInfoList = document.createElement("ul");
   studentInfoList.classList.add("student-info");
@@ -45,13 +45,19 @@ function populateStudentData(studentData) {
   menuContainer.appendChild(studentInfoList);
 }
 
-
-
-
-// Listen to button clicks and navigate to other pages
-document.getElementById("prove-btn").addEventListener("click", function (event) {
+document.getElementById("prove_sostenute-btn").addEventListener("click", function (event) {
   event.preventDefault();
   window.location.href = `prove.html?id=${studentId}`;
+});
+
+document.getElementById("libretto-btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = `libretto.html?id=${studentId}`;
+});
+
+document.getElementById("storico-prove-btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = `prova_sostenuta.html?id=${studentId}`;
 });
 
 document.getElementById("cambio-password-btn").addEventListener("click", function (event) {
@@ -64,8 +70,6 @@ document.getElementById("logout-btn").addEventListener("click", function (event)
   window.location.href = "login.html";
 });
 
-// Check if studentId is available
 if (studentId) {
-  // Fetch student data and populate the HTML
   fetchAndPopulateStudentData(studentId);
 }

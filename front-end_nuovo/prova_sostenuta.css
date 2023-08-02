@@ -1,64 +1,43 @@
-/* Stile generale del contenitore */
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-}
-
-/* Stile dell'intestazione */
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Stile dei campi del form */
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="date"],
-input[type="number"],
-input[type="checkbox"] {
+/* Table styles */
+table {
+  border-collapse: collapse;
   width: 100%;
+  border: 2px solid black; /* Add a bold black border to the whole table */
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
   padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  text-align: left;
 }
 
-input[type="checkbox"] {
-  width: auto;
-  margin-bottom: 20px;
-}
-
-/* Stile del pulsante di invio (se presente nel form) */
-input[type="submit"] {
-  background-color: #4CAF50;
+th {
+  background-color: #007bff;
   color: white;
-  padding: 10px 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Pagination styles */
+#pagination {
+  margin-top: 10px;
+}
+
+/* Pagination button styles */
+#prev-page-btn, #next-page-btn {
+  background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 3px;
+  padding: 5px 10px;
   cursor: pointer;
-  float: right;
+  margin-right: 5px;
 }
 
-/* Stile per i campi obbligatori del form */
-input:required {
-  border-color: #ff6666;
-}
-
-/* Stile per i campi non validi del form */
-input:invalid {
-  border-color: #ff6666;
-}
-
-/* Stile per i campi validi del form */
-input:valid {
-  border-color: #66ff66;
+#prev-page-btn:disabled, #next-page-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
