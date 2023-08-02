@@ -186,3 +186,4 @@ def delete_esami_registrati_by_id_esame(id_esame):
 def delete_esami_registrati_by_id_utente(id_utente):
     ret = delete_by_id.delete_esami_registrati_by_id_utente(id_utente)
     return jsonify(ret)
+
