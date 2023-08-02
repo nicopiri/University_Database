@@ -170,13 +170,6 @@ def delete_prova_gestita_by_id_prova(id_prova):
     ret = delete_by_id.delete_prova_gestita_by_id_prova(id_prova)
     return jsonify(ret)
 
-
-
-@app.route('/get/utente/<int:id_utente>', methods=['GET'])
-def get_utente(id_utente):
-    val = protected_select.get_dati_utente_from_id(id_utente)
-    return jsonify(val)
-
 @app.route('/delete/esami_registrati/esame/<int:id_esame>', methods=['DELETE'])
 def delete_esami_registrati_by_id_esame(id_esame):
     ret = delete_by_id.delete_esami_registrati_by_id_esame(id_esame)
@@ -187,3 +180,42 @@ def delete_esami_registrati_by_id_utente(id_utente):
     ret = delete_by_id.delete_esami_registrati_by_id_utente(id_utente)
     return jsonify(ret)
 
+
+
+@app.route('/get/utente/<int:id_utente>', methods=['GET'])
+def get_utente(id_utente):
+    val = protected_select.get_dati_utente_from_id(id_utente)
+    return jsonify(val)
+
+@app.route('/get/prove_valide/<int:id_studente>', methods=['GET'])
+def get_prove_valide(id_studente):
+    try:
+        prove_valide = protected_select.get_prove_valide(id_studente)
+        if prove_valide is not None:
+            return jsonify(prove_valide)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/get/storico_prove/<int:id_studente>', methods=['GET'])
+def get_storico_prove(id_studente):
+    try:
+        storico_prove = protected_select.get_storico_prove(id_studente)
+        if storico_prove is not None:
+            return jsonify(storico_prove)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/get/libretto/<int:id_studente>', methods=['GET'])
+def get_libretto(id_studente):
+    try:
+        libretto = protected_select.get_libretto(id_studente)
+        if libretto is not None:
+            return jsonify(libretto)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})

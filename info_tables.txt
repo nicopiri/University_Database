@@ -49,7 +49,7 @@ Table: prove_sostenuta
 | id_studente      | integer          |                        | YES        |
 | id_prova         | integer          |                        | YES        |
 | data_appello     | date             |                        | YES        |
-| data_superamento | date             |                        | YES        |
+| superato         | boolean             |                        | YES        |
 | data_scadenza    | date             |                        | YES        |
 | voto             | numeric          |                        | YES        |
 | valid            | boolean          |                        | YES        |
@@ -57,10 +57,10 @@ Table: prove_sostenuta
 
 Table: ruoli
 +----------+------------------+------------+
-| column_name | data_type        | is_nullable |
+| column_name | data_type        | is_nullable|
 +----------+------------------+------------+
 | id         | integer          | NO         |
-| ruolo      | character varying(50) | YES        |
+| ruolo      | character varying(50) | YES   |
 +----------+------------------+------------+
 
 Table: utenti
@@ -76,6 +76,9 @@ Table: utenti
 | cognome         | character varying | 50                     | YES        |
 | codice_fiscale  | character varying | 16                     | YES        |
 +-----------------+------------------+------------------------+------------+
+ruolo studente:1
+ruolo docente:2
+
 Table: esami_registrati
 column_name	data_type	is_nullable
 id_esame	integer		NO
