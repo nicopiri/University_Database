@@ -46,6 +46,34 @@ body {
   background-repeat: no-repeat;
 }
 
+.container button,
+.container a {
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.container a#prove_sostenute-btn,
+.container a#libretto-btn,
+.container a#cambio-password-btn,
+.container a#logout-btn {
+  background-color: #007BFF; /* Colore per gli altri bottoni */
+}
+
+.container button:hover,
+.container a:hover {
+  background-color: #0056b3;
+}
+
+
 /* Add this CSS to dopo_login_studenti.css */
 .container {
   max-width: 600px;

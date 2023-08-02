@@ -32,7 +32,6 @@ def update_password(id_utente, hashed_password, salt):
         return 'Password updated successfully for user with id: {}'.format(id_utente)
     except Exception as e:
         return 'Error updating password: {}'.format(str(e))
-    
 def insert_password(id_utente, hashed_password, salt):
     try:
         conn = connection.open_db()
