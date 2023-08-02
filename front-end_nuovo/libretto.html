@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Libretto</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2>Libretto</h2>
+  <table id="prove-table">
+    <tr>
+      <th>Id_esame</th>
+      <th>Data Superamento</th>
+      <th>Esito</th>
+    </tr>
+    <!-- Aggiungi altre righe con i dati delle prove qui -->
+  </table>
+
+  <script>
+    async function populateProveTable() {
+      try {
+        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere i dati delle prove
+        const data = await response.json();
+
+        const proveTable = document.getElementById('prove-table');
+
+        // Cicla attraverso i dati delle prove e crea le righe della tabella dinamicamente
+        data.forEach(prova => {
+          const row = proveTable.insertRow();
+
+          const descrizioneCell = row.insertCell();
+          descrizioneCell.textContent = prova.descrizione;
+
+          const dataCell = row.insertCell();
+          dataCell.textContent = prova.data;
+
+          const esitoCell = row.insertCell();
+          esitoCell.textContent = prova.esito;
+
+          const votoCell = row.insertCell();
+          votoCell.textContent = prova.voto;
+        });
+      } catch (error) {
+        console.error('Errore durante il recupero dei dati delle prove:', error);
+      }
+    }
+
+    // Chiama la funzione per popolare la tabella all'avvio della pagina
+    populateProveTable();
+  </script>
+</body>
+</html>
