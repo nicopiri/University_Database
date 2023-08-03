@@ -38,9 +38,13 @@ def get_prove_valide(id_studente):
         conn = connection.open_db()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto
+            SELECT e.nome, ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto
             FROM prove_sostenuta ps
-            WHERE ps.id_studente = %s AND ps.valid = true;
+            JOIN prove p on ps.id_prova = p.id_prova
+            JOIN esami e on p.esame_appartenente = e.id_esame
+            WHERE ps.id_studente = %s
+            AND ps.valid = true
+            ORDER BY data_appello;
         """, (id_studente,))
         prove = cursor.fetchall()
         conn.close()
@@ -54,8 +58,10 @@ def get_storico_prove(id_studente):
         conn = connection.open_db()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto, ps.valid
+            SELECT e.nome, ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto, ps.valid
             FROM prove_sostenuta ps
+            JOIN prove p on ps.id_prova = p.id_prova
+            JOIN esami e on p.esame_appartenente = e.id_esame
             WHERE ps.id_studente = %s
             ORDER BY data_appello;
         """, (id_studente,))
