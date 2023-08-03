@@ -30,7 +30,6 @@ document.getElementById("reset-password-form").addEventListener("submit", functi
     body: JSON.stringify(resetPasswordData)
   })
     .then(response => {
-    console.log(resetPasswordData)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

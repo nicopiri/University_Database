@@ -1,60 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Gestione Esami</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insert Esame Form</title>
+  <link rel="stylesheet" href="crea_esame.css">
 </head>
 <body>
-  <h2>Gestione Esami</h2>
-  <table id="esami-table">
-    <tr>
-	<th>Id_esame</th>
-	<th>Tipo</th>
-      <th>Data Esame</th>
-      <th>Data Scadenza</th>
-	<th>Azione</th>
-	  
-    </tr>
-  </table>
-
-  <script>
-    async function populateProveTable() {
-      try {
-        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere i dati delle prove
-        const data = await response.json();
-
-        const proveTable = document.getElementById('prove-table');
-
-        // Cicla attraverso i dati delle prove e crea le righe della tabella dinamicamente
-        data.forEach(prova => {
-          const row = proveTable.insertRow();
-
-          const dataProvaCell = row.insertCell();
-          dataProvaCell.textContent = prova.data_prova;
-
-          const dataScadenzaCell = row.insertCell();
-          dataScadenzaCell.textContent = prova.data_scadenza;
-        });
-      } catch (error) {
-        console.error('Errore durante il recupero dei dati delle prove:', error);
-      }
-    }
-
-    // Chiama la funzione per popolare la tabella all'avvio della pagina
-    populateProveTable();
-  </script>
+  <div class="container">
+    <h2>Insert Esame</h2>
+    <form id="esameForm">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+      <label for="descrizione">Descrizione:</label>
+      <input type="text" id="descrizione" name="descrizione" required>
+      <label for="min">Min Prove:</label>
+      <input type="number" id="min" name="min" required>
+      <label for="max">Max Prove:</label>
+      <input type="number" id="max" name="max" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <script src="crea_esame.js"></script>
 </body>
 </html>

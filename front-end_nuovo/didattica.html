@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Attività didattica</title>
+  <title>Attivita didattica</title>
+  <link rel="stylesheet" type="text/css" href="didattica.css">
 </head>
 <body>
-  <h2>Attività didattica</h2>
-  <a href="lista_appelli.html">
-    <button id="lista-appelli-btn" onclick="redirectToAppelliPage()">Prove</button>
-  </a>
+  <header>
+    <h1>Attivita didattica</h1>
+  </header>
   
-  <!-- Aggiungiamo il bottone "Crea Prova" -->
-  <a href="crea_prova.html">
-  <button id="crea-prova-btn">Crea Prova</button>
-
-  <!-- Aggiungiamo il bottone "Crea Esame" -->
-  <a href="crea_esame.html">
-  <button id="crea-esame-btn">Crea Esame</button>
-   <button>Prove sostenute</button>
-   <button>Esami registrati</button>
-
-
-  <script>
-    function redirectToAppelliPage() {
-      window.location.href = "appelli.html";
-    }
-  </script>
+  <nav>
+    <ul>
+      <li><button id="provaBtn">Prove</button></li>
+      <li><button id="creaProvaBtn">Crea Prova</button></li>
+      <li><button id="creaEsameBtn">Crea Esame</button></li>
+      <li><button id="proveSostenuteBtn">Prove sostenute</button></li>
+      <li><button id="esamiRegistratiBtn">Esami registrati</button></li>
+      <li><button id="updatePasswordBtn">Update Password</button></li>
+    </ul>
+  </nav>
+  
+  <script src="didattica.js"></script>
 </body>
 </html>
-
-
-
-
-
-

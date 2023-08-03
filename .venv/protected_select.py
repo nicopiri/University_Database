@@ -6,9 +6,12 @@ def get_role_from_id(id):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT ruolo FROM ruoli WHERE id = %s", (id,))
+        cursor.execute("""
+                       SELECT r.ruolo FROM ruoli r JOIN utenti u ON (r.id=u.ruolo) WHERE u.id_utente = %s
+                       """, (id,))
         role = cursor.fetchone()
         conn.close()
+        print(role)
         if role:
             return role[0]
         else:

@@ -67,7 +67,7 @@ def insert_prova(appello, tipo, ricaduta_esame, opzionale, esame_appartenente):
             bleach.clean(appello),
             bleach.clean(tipo),
             bleach.clean(ricaduta_esame),
-            bleach.clean(opzionale),
+            opzionale,
             bleach.clean(esame_appartenente)
         )
         cursor.execute(query, values)

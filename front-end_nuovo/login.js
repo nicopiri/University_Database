@@ -28,7 +28,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         // Redirect to dopo_login_studenti.html with student id as query parameter
         window.location.href = `dopo_login_studenti.html?id=${id}`;
       } else if (data === 'Docente') {
-        window.location.href = 'dopo_login_docenti.html';
+        window.location.href = `didattica.html?id=${id}`;
       } else {
         // Incorrect password or other error message from the API
         showErrorMessage('Incorrect Password');
@@ -47,3 +47,12 @@ function showErrorMessage(message) {
   errorDiv.textContent = message;
   errorDiv.style.display = 'block';
 }
+
+document.getElementById("registration-btn").addEventListener("click", function(event) {
+  event.preventDefault();
+  window.location.href = "registration.html";
+});
+document.getElementById("reset-password-btn").addEventListener("click", function(event) {
+  event.preventDefault();
+  window.location.href = "update-password.html";
+});

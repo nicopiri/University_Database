@@ -38,15 +38,11 @@ def update_password(id_utente, old_password, new_passowd):
 
 def check_password(id_utente, password):
     saved_pw_bytes, salt_bytes = login_db.get_hashed_password(id_utente)
-    print('here')
-    print(id_utente)
     if saved_pw_bytes is None or salt_bytes is None:
         return False
     saved_pw = bytes.fromhex(saved_pw_bytes[2:])
     salt = bytes.fromhex(salt_bytes[2:])
     encrypt_pw = bcrypt.hashpw(password.encode('utf-8'), salt)
-    print(encrypt_pw)
-    print(saved_pw)
     if saved_pw == encrypt_pw:
         return True
     return False

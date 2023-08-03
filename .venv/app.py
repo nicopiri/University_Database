@@ -56,6 +56,7 @@ def user_insert():
 @app.route('/insert/password', methods=['POST'])
 def password_insert():
     data = request.get_json()
+    print(data)
     id = data.get('id')
     password = data.get('password')
     if encrypt_password.pasword_exist(id) is None:
@@ -81,6 +82,7 @@ def password_update():
 @app.route('/insert/esame', methods=['POST'])
 def esame_insert():
     data = request.get_json()
+    print(data)
     nome = data.get('nome')
     descrizione = data.get('descrizione')
     min_prove = data.get('min')
@@ -95,6 +97,7 @@ def esame_insert():
 @app.route('/insert/prova', methods=['POST'])
 def prova_insert():
     data = request.get_json()
+    print(data)
     appello = data.get('appello')
     tipo = data.get('tipo')
     ricaduta_esame = data.get('ricaduta')

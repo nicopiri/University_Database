@@ -1,61 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Gestione Prove</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insert Prova Form</title>
+  <link rel="stylesheet" href="crea_prova.css">
 </head>
 <body>
-  <h2>Gestione Prove</h2>
-  <table id="prove-table">
-    <tr>
-	 <th>id_prova</th>
-	 <th>Tipo</th>
-      <th>Data Prova</th>
-      <th>Data Scadenza</th>
-	    <th>Azione</th>
-    </tr>
-  </table>
-
-  <script>
-    async function populateProveTable() {
-      try {
-        const response = await fetch('API_URL/prove'); // Sostituisci "API_URL" con l'URL effettivo delle tue API per ottenere i dati delle prove
-        const data = await response.json();
-
-        const proveTable = document.getElementById('prove-table');
-
-        // Cicla attraverso i dati delle prove e crea le righe della tabella dinamicamente
-        data.forEach(prova => {
-          const row = proveTable.insertRow();
-
-          const dataProvaCell = row.insertCell();
-          dataProvaCell.textContent = prova.data_prova;
-
-          const dataScadenzaCell = row.insertCell();
-          dataScadenzaCell.textContent = prova.data_scadenza;
-        });
-      } catch (error) {
-        console.error('Errore durante il recupero dei dati delle prove:', error);
-      }
-    }
-
-    // Chiama la funzione per popolare la tabella all'avvio della pagina
-    populateProveTable();
-  </script>
+  <div class="container">
+    <h2>Insert Prova</h2>
+    <form id="provaForm">
+      <label for="appello">Data:</label>
+      <input type="date" id="appello" name="appello" required>
+      <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+          <option value="Scritto">Scritto</option>
+          <option value="Orale">Orale</option>
+          <option value="Progetto">Progetto</option>
+        </select>
+      <label for="ricaduta">Ricaduta:</label>
+        <select id="ricaduta" name="ricaduta" required>
+          <option value="Media">Media ponderata</option>
+          <option value="Bonus">Bonus</option>
+          <option value="Idoneita">Idoneita</option>
+        </select>        
+      <label for="opzionale">Opzionale:</label>
+        <select id="opzionale" name="opzionale" required>
+          <option value="true">Si</option>
+          <option value="false">No</option>
+        </select>
+      <label for="esame">Esame Appartenente:</label>
+      <select id="esame" name="esame" required></select>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <script src="crea_prova.js"></script>
 </body>
 </html>
-
-
