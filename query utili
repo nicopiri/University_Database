@@ -51,23 +51,16 @@ FROM esami_registrati er
 JOIN esami e ON er.id_esame= e.id_esame
 WHERE er.id_utente = 3;
 
-
-
-UPDATE prova
-SET nome_prova = 
-  CASE
-    WHEN id_prova = 32 THEN 'Matematica prova 1'
-    WHEN id_prova = 33 THEN 'Matematica prova 2'
-    WHEN id_prova = 34 THEN 'Matematica prova 3'
-    WHEN id_prova = 35 THEN 'Fisica prova 1'
-    WHEN id_prova = 36 THEN 'Fisica prova 2'
-    WHEN id_prova = 37 THEN 'Informatica prova 1'
-    WHEN id_prova = 38 THEN 'Informatica prova 2'
-    WHEN id_prova = 39 THEN 'Informatica prova 3'
-    WHEN id_prova = 40 THEN 'Chimica prova 1'
-  END;
-
 -- esami by docente responsabile
 SELECT id_esame, nome
 FROM esami
 WHERE docente_responsabile = <ID_DEL_DOCENTE>;
+
+--tutti gli esami disponibili 
+SELECT * FROM esami
+
+-- tutte le prove che il docente ha gestito tramite id_docente
+SELECT p.*
+FROM prova_gestita pg
+JOIN prove p ON pg.id_prova = p.id_prova
+WHERE pg.id_docente = <id_docente>;
