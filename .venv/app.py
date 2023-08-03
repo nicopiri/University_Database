@@ -130,11 +130,6 @@ def prova_gestita_insert():
     return jsonify(ret)
 
 
-
-
-
-
-
 @app.route('/delete/utente/<int:id_utente>', methods=['DELETE'])
 def delete_utente(id_utente):
     ret = delete_by_id.delete_utente_by_id(id_utente)
@@ -226,6 +221,28 @@ def get_esami_by_docente_responsabile(docente_responsabile):
         esami = protected_select.get_esami_by_docente_responsabile(docente_responsabile)
         if esami is not None:
             return jsonify(esami)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/get/esami', methods=['GET'])
+def get_exams():
+    try:
+        exams = protected_select.get_all_esami()
+        if exams is not None:
+            return jsonify(exams)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/get/prove_gestite/<int:id_docente>', methods=['GET'])
+def get_prove_gestite(id_docente):
+    try:
+        prove_gestite = protected_select.get_prove_gestite_by_id_docente(id_docente)
+        if prove_gestite is not None:
+            return jsonify(prove_gestite)
         else:
             return jsonify({"error": "Error querying the database"})
     except Exception as e:
