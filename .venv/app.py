@@ -219,3 +219,14 @@ def get_libretto(id_studente):
             return jsonify({"error": "Error querying the database"})
     except Exception as e:
         return jsonify({"error": str(e)})
+
+@app.route('/get/esami', methods=['GET'])
+def get_esami():
+    try:
+        esami = protected_select.get_esami()
+        if esami is not None:
+            return jsonify(esami)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})

@@ -83,3 +83,16 @@ def get_libretto(id_studente):
     except psycopg2.Error as e:
         print("Error querying the database:", e)
         return None
+
+def get_esami():
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_esame, nome FROM esami;")
+        esami = cursor.fetchall()
+        conn.close()
+        return esami
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None
+
