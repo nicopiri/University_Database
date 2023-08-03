@@ -18,24 +18,30 @@ GROUP BY u.id_utente, u.nome, u.cognome
 HAVING COUNT(ps.id_prova) >= e.min_prove
 AND AVG(ps.voto) >= 18;
 
---APPELLI= vedere quali studenti hanno  determinata prova valid tramite l'idprova
+--vedere quali studenti hanno  determinata prova valid tramite l'idprova
 
 SELECT u.id_utente, u.nome, u.cognome
 FROM utenti u
 JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
 WHERE ps.valid = true
+  AND ps.superato = true
   AND ps.voto >= 18
   AND ps.id_prova = 'ID_DELLA_PROVA'
 
   -- Prove valide
-SELECT ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto
+SELECT e.nome, ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto
 FROM prove_sostenuta ps
-WHERE ps.id_studente = <id_studente>
+JOIN prove p on ps.id_prova = p.id_prova
+JOIN esami e on p.esame_appartenente = e.id_esame
+WHERE ps.id_studente = 3
+ORDER BY data_appello;
 AND ps.valid = true;
 
  --storico prove
-SELECT ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto, ps.valid
+SELECT e.nome, ps.id_prova, ps.data_appello, ps.superato, ps.data_scadenza, ps.voto, ps.valid
 FROM prove_sostenuta ps
+JOIN prove p on ps.id_prova = p.id_prova
+JOIN esami e on p.esame_appartenente = e.id_esame
 WHERE ps.id_studente = 3
 ORDER BY data_appello;
 
