@@ -220,10 +220,10 @@ def get_libretto(id_studente):
     except Exception as e:
         return jsonify({"error": str(e)})
 
-@app.route('/get/esami', methods=['GET'])
-def get_esami():
+@app.route('/get/esami/<int:docente_responsabile>', methods=['GET'])
+def get_esami_by_docente_responsabile(docente_responsabile):
     try:
-        esami = protected_select.get_esami()
+        esami = protected_select.get_esami_by_docente_responsabile(docente_responsabile)
         if esami is not None:
             return jsonify(esami)
         else:

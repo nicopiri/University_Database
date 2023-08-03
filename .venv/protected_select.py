@@ -90,15 +90,18 @@ def get_libretto(id_studente):
         print("Error querying the database:", e)
         return None
 
-def get_esami():
+def get_esami_by_docente_responsabile(docente_responsabile):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT id_esame, nome FROM esami;")
-        esami = cursor.fetchall()
+        cursor.execute("""
+            SELECT id_esame, nome
+            FROM esami
+            WHERE docente_responsabile = %s;
+        """, (docente_responsabile,))
+        exams = cursor.fetchall()
         conn.close()
-        return esami
+        return exams
     except psycopg2.Error as e:
         print("Error querying the database:", e)
         return None
-
