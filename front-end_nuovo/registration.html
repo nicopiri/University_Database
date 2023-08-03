@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration</title>
+  <link rel="stylesheet" type="text/css" href="registration.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Registration</h2>
+    <form id="registration-form">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input type="text" id="cognome" name="cognome" required>
+      </div>
+      <div class="form-group">
+        <label for="cf">Codice Fiscale</label>
+        <input type="text" id="cf" name="cf" required>
+      </div>
+      <div class="form-group">
+        <label for="luogo">Luogo di nascita</label>
+        <input type="text" id="luogo" name="luogo" required>
+      </div>
+      <div class="form-group">
+        <label for="nascita">Data di nascita</label>
+        <input type="date" id="nascita" name="nascita" required>
+      </div>
+      <div class="result-container" id="result-container">
+        <p>Your ID: <span id="user-id"></span></p>
+      </div>
+      <div id="error-message" class="error-message"></div>
+      <button type="submit" class="blue-button">Register</button>
+    </form>
+  </div>
+  <script src="registration.js"></script>
+</body>
+</html>
