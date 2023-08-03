@@ -67,3 +67,7 @@ SET nome_prova =
     WHEN id_prova = 40 THEN 'Chimica prova 1'
   END;
 
+-- esami by docente responsabile
+SELECT id_esame, nome
+FROM esami
+WHERE docente_responsabile = <ID_DEL_DOCENTE>;
