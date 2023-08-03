@@ -1,6 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search);
+var studentId = urlParams.get('id');
 async function populateProveTable() {
     try {
-      const response = await fetch('http://127.0.0.1:5000/get/prove_valide/3'); // Update with your API URL
+      const response = await fetch(`http://127.0.0.1:5000/get/prove_valide/${studentId}`); // Update with your API URL
       const data = await response.json();
   
       const proveTable = document.getElementById('prove-table');
