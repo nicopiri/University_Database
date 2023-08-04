@@ -181,4 +181,39 @@ def get_studenti_registrabili_by_id_esame(id_esame):
         print("Error querying the database:", e)
         return None    
     
-    
+def get_prove_by_docente_responsabile(docente_responsabile):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT e.nome, p.id_prova, p.appello, p.opzionale, p.tipo, p.ricaduta_esame 
+            FROM esami e
+            JOIN prove p ON e.id_esame = p.esame_appartenente
+            WHERE e.docente_responsabile = %s;
+        """, (docente_responsabile,))
+        exams = cursor.fetchall()
+        conn.close()
+        return exams
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None
+
+
+def get_students_by_prova_id(prova_id):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT u.id_utente, u.nome, u.cognome
+            FROM utenti u
+            JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
+            WHERE ps.superato = true
+            AND ps.valid = true
+            AND ps.id_prova = %s;
+        """, (prova_id,))
+        students = cursor.fetchall()
+        conn.close()
+        return students
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None

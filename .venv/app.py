@@ -257,20 +257,6 @@ def get_prove_gestite(id_docente):
         return jsonify({"error": str(e)})
 
 
-
-@app.route('/update/password', methods=['POST'])
-def password_update():
-    data = request.get_json()
-    print(data)
-    id = data.get('id')
-    vecchia_password = data.get('vecchia_password')
-    nuova_password = data.get('nuova_password')
-    
-    result = encrypt_password.update_password(id, vecchia_password, nuova_password)
-    return result
-
-
-
 @app.route('/update/password', methods=['POST'])
 def password_update():
     data = request.get_json()
@@ -292,3 +278,22 @@ def get_students_registrabili_by_id_esame(id_esame):
             return jsonify({"error": "Error querying the database"})
     except Exception as e:
         return jsonify({"error": str(e)})
+    
+@app.route('/get/prove/docente/<int:id_utente>', methods=['GET'])
+def get_prove_by_docente_responsabile(id_utente):
+    try:
+        prove = protected_select.get_prove_by_docente_responsabile(id_utente)
+        if prove is not None:
+            return jsonify(prove)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+    
+@app.route('/get/students_by_prova_superata/<int:prova_id>', methods=['GET'])
+def get_students_by_prova(prova_id):
+    students = protected_select.get_students_by_prova_id(prova_id)
+    if students is not None:
+        return jsonify(students)
+    else:
+        return jsonify({"error": "Error querying the database"})
