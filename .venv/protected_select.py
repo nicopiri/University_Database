@@ -155,3 +155,30 @@ def get_esami_registrati_by_docente_responsabile(docente_responsabile):
     except psycopg2.Error as e:
         print("Error querying the database:", e)
         return None
+
+def get_studenti_registrabili_by_id_esame(id_esame):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT u.id_utente, u.nome, u.cognome
+            FROM utenti u
+            INNER JOIN prove_sostenuta ps ON u.id_utente = ps.id_studente
+            INNER JOIN prove p ON ps.id_prova = p.id_prova
+            INNER JOIN esami e ON p.esame_appartenente = e.id_esame
+            WHERE p.opzionale = FALSE
+            AND ps.valid = TRUE
+            AND e.id_esame = %s
+            AND p.ricaduta_esame = 'media'
+            GROUP BY u.id_utente, u.nome, u.cognome, e.min_prove
+            HAVING COUNT(ps.id_prova) >= e.min_prove
+            AND AVG(ps.voto) >= 18;
+        """, (id_esame,))
+        students = cursor.fetchall()
+        conn.close()
+        return students
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None    
+    
+    

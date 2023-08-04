@@ -268,3 +268,27 @@ def password_update():
     
     result = encrypt_password.update_password(id, vecchia_password, nuova_password)
     return result
+
+
+
+@app.route('/update/password', methods=['POST'])
+def password_update():
+    data = request.get_json()
+    print(data)
+    id = data.get('id')
+    vecchia_password = data.get('vecchia_password')
+    nuova_password = data.get('nuova_password')
+    
+    result = encrypt_password.update_password(id, vecchia_password, nuova_password)
+    return result
+
+@app.route('/get/studenti_registrabili/<int:id_esame>', methods=['GET'])
+def get_students_registrabili_by_id_esame(id_esame):
+    try:
+        studenti = protected_select.get_studenti_registrabili_by_id_esame(id_esame)
+        if studenti is not None:
+            return jsonify(studenti)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})

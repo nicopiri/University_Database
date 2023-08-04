@@ -12,9 +12,9 @@ INNER JOIN prove p ON ps.id_prova = p.id_prova
 INNER JOIN esami e ON p.esame_appartenente = e.id_esame
 WHERE p.opzionale = FALSE
 AND ps.valid = TRUE
-AND e.id_esame = 'ID_ESAME'
+AND e.id_esame = 13
 AND p.ricaduta_esame = 'media'
-GROUP BY u.id_utente, u.nome, u.cognome
+GROUP BY u.id_utente, u.nome, u.cognome, e.min_prove
 HAVING COUNT(ps.id_prova) >= e.min_prove
 AND AVG(ps.voto) >= 18;
 
