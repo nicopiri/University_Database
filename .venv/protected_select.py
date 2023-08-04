@@ -137,3 +137,20 @@ def get_prove_gestite_by_id_docente(id_docente):
     except psycopg2.Error as e:
         print("Error querying the database:", e)
         return None
+
+def get_esami_registrati_by_docente_responsabile(docente_responsabile):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT er.id_esame, er.id_utente, er.voto, er.data
+            FROM esami e
+            JOIN esami_registrati er ON e.id_esame = er.id_esame
+            WHERE e.docente_responsabile = %s;
+        """, (docente_responsabile,))
+        exams = cursor.fetchall()
+        conn.close()
+        return exams
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None

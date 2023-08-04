@@ -229,6 +229,17 @@ def get_esami_by_docente_responsabile(docente_responsabile):
     except Exception as e:
         return jsonify({"error": str(e)})
 
+@app.route('/get/esami_registrati/<int:docente_responsabile>', methods=['GET'])
+def get_esami_registrati_by_docente_responsabile(docente_responsabile):
+    try:
+        esami = protected_select.get_esami_registrati_by_docente_responsabile(docente_responsabile)
+        if esami is not None:
+            return jsonify(esami)
+        else:
+            return jsonify({"error": "Error querying the database"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 @app.route('/get/esami', methods=['GET'])
 def get_exams():
     try:
