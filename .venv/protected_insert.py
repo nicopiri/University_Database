@@ -124,24 +124,23 @@ def insert_prova_gestita(id_docente, id_prova):
     except psycopg2.Error as e:
         return f'Error inserting data: {e}'
     
-def insert_esami_registrati(id_esame, id_utente, voto, data):
+def insert_esami_registrati(id_esame, id_utente, voto):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
         query = """
                 INSERT INTO esami_registrati (id_esame, id_utente, voto, data)
-                VALUES (%s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
                 """
         values = (
             bleach.clean(id_esame),
             bleach.clean(id_utente),
-            bleach.clean(voto),
-            bleach.clean(data)
+            bleach.clean(voto)
         )
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(conn)
-        return f'Data inserted successfully!'
+        return 'Data inserted successfully!'
 
     except psycopg2.Error as e:
         return f'Error inserting data: {e}'

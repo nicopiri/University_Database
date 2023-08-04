@@ -66,23 +66,9 @@ def password_insert():
     if result == 'Success':
         return 'Password inserted successfully for user with id: {}'.format(id)
 
-
-@app.route('/update/password', methods=['POST'])
-def password_update():
-    data = request.get_json()
-    print(data)
-    id = data.get('id')
-    vecchia_password = data.get('vecchia_password')
-    nuova_password = data.get('nuova_password')
-    
-    result = encrypt_password.update_password(id, vecchia_password, nuova_password)
-    return result
-
-
 @app.route('/insert/esame', methods=['POST'])
 def esame_insert():
     data = request.get_json()
-    print(data)
     nome = data.get('nome')
     descrizione = data.get('descrizione')
     min_prove = data.get('min')
@@ -92,7 +78,15 @@ def esame_insert():
     ret =  protected_insert.insert_esame(nome, descrizione, min_prove, max_prove, docente_responsabile)
     return jsonify(ret)
 
+@app.route('/insert/esame-registrato', methods=['POST'])
+def esame_registrato_insert():
+    data = request.get_json()
+    id_esame = data.get('id_esame')
+    id_utente = data.get('id_utente')
+    voto = data.get('voto')
 
+    ret =  protected_insert.insert_esami_registrati(id_esame, id_utente , voto)
+    return jsonify(ret)
 
 @app.route('/insert/prova', methods=['POST'])
 def prova_insert():
@@ -168,9 +162,9 @@ def delete_prova_gestita_by_id_prova(id_prova):
     ret = delete_by_id.delete_prova_gestita_by_id_prova(id_prova)
     return jsonify(ret)
 
-@app.route('/delete/esami_registrati/esame/<int:id_esame>', methods=['DELETE'])
-def delete_esami_registrati_by_id_esame(id_esame):
-    ret = delete_by_id.delete_esami_registrati_by_id_esame(id_esame)
+@app.route('/delete/esami_registrati/<int:id_esame>/<int:id_utente>', methods=['DELETE'])
+def delete_esami_registrati_by_ids(id_esame, id_utente):
+    ret = delete_by_id.delete_esami_registrati_by_id_esame(id_esame, id_utente)
     return jsonify(ret)
 
 @app.route('/delete/esami_registrati/utente/<int:id_utente>', methods=['DELETE'])
@@ -261,3 +255,16 @@ def get_prove_gestite(id_docente):
             return jsonify({"error": "Error querying the database"})
     except Exception as e:
         return jsonify({"error": str(e)})
+
+
+
+@app.route('/update/password', methods=['POST'])
+def password_update():
+    data = request.get_json()
+    print(data)
+    id = data.get('id')
+    vecchia_password = data.get('vecchia_password')
+    nuova_password = data.get('nuova_password')
+    
+    result = encrypt_password.update_password(id, vecchia_password, nuova_password)
+    return result

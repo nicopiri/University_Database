@@ -98,7 +98,7 @@ def get_esami_by_docente_responsabile(docente_responsabile):
         conn = connection.open_db()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT id_esame, nome
+            SELECT *
             FROM esami
             WHERE docente_responsabile = %s;
         """, (docente_responsabile,))
@@ -143,9 +143,10 @@ def get_esami_registrati_by_docente_responsabile(docente_responsabile):
         conn = connection.open_db()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT er.id_esame, er.id_utente, er.voto, er.data
+            SELECT er.id_esame,e.nome, er.id_utente, u.nome, u.cognome, er.voto, er.data
             FROM esami e
             JOIN esami_registrati er ON e.id_esame = er.id_esame
+            JOIN utenti u ON u.id_utente = er.id_utente
             WHERE e.docente_responsabile = %s;
         """, (docente_responsabile,))
         exams = cursor.fetchall()

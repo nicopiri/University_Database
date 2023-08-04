@@ -7,19 +7,34 @@
 <body>
   <header>
     <h1>Attivita didattica</h1>
+    <div id="menu-container"></div>
   </header>
   
   <nav>
-    <ul>
-      <li><button id="provaBtn">Prove</button></li>
-      <li><button id="creaProvaBtn">Crea Prova</button></li>
-      <li><button id="creaEsameBtn">Crea Esame</button></li>
-      <li><button id="proveSostenuteBtn">Prove sostenute</button></li>
-      <li><button id="esamiRegistratiBtn">Esami registrati</button></li>
-      <li><button id="updatePasswordBtn">Update Password</button></li>
-    </ul>
-  </nav>
-  
+    <div class="nav-section">
+      <h2>Esami</h2>
+      <ul>
+        <li><button id="creaEsameBtn">Crea Esame</button></li>
+        <li><button id="esamiBtn">Esami Creati</button></li>
+        <li><button id="creaEsameRegistratiBtn">Crea Esame Registrato</button></li>
+        <li><button id="esamiRegistratiBtn">Esami Registrati</button></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h2>Prove</h2>
+      <ul>
+        <li><button id="provaBtn">Prove</button></li>
+        <li><button id="creaProvaBtn">Crea Prova</button></li>
+        <li><button id="proveSostenuteBtn">Prove sostenute</button></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <ul>
+        <li><button id="updatePasswordBtn">Cambia Password</button></li>
+        <li><button id="logoutBtn">Logout</button></li>
+      </ul>
+    </div>
+  </nav>  
   <script src="didattica.js"></script>
 </body>
 </html>
