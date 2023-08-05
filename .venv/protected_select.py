@@ -65,7 +65,7 @@ def get_storico_prove(id_studente):
             FROM prove_sostenuta ps
             JOIN prove p on ps.id_prova = p.id_prova
             JOIN esami e on p.esame_appartenente = e.id_esame
-            WHERE ps.id_studente = %s
+            WHERE ps.id_studente = %s AND ps.voto != 0
             ORDER BY data_appello;
         """, (id_studente,))
         storico = cursor.fetchall()
@@ -210,6 +210,41 @@ def get_students_by_prova_id(prova_id):
             WHERE ps.superato = true
             AND ps.valid = true
             AND ps.id_prova = %s;
+        """, (prova_id,))
+        students = cursor.fetchall()
+        conn.close()
+        return students
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None
+
+def get_prove_by_esame(id_esame, id_studente):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT DISTINCT p.id_prova, e.nome, p.appello, p.opzionale, p.tipo, p.ricaduta_esame 
+            FROM esami e
+            JOIN prove p ON e.id_esame = p.esame_appartenente 
+            WHERE p.esame_appartenente = %s 
+            AND p.id_prova NOT IN 
+            (SELECT ps.id_prova FROM prove_sostenuta ps WHERE ps.id_studente = %s AND (ps.voto = 0 OR ps.voto > 18));
+        """, (id_esame, id_studente,))
+        exams = cursor.fetchall()
+        conn.close()
+        return exams
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None
+    
+def get_students_by_prova_id(prova_id):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT ps.id_studente
+            FROM prove_sostenuta ps 
+            WHERE ps.id_prova = %s;
         """, (prova_id,))
         students = cursor.fetchall()
         conn.close()

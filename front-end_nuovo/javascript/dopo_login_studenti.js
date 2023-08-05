@@ -83,6 +83,11 @@ document.getElementById("logout-btn").addEventListener("click", function (event)
   window.location.href = "login.html";
 });
 
+document.getElementById("apelli-btn").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = `appelli.html?id=${studentId}`;
+});
+
 if (studentId) {
   fetchAndPopulateStudentData(studentId);
 }

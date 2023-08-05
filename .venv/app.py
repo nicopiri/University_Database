@@ -16,9 +16,7 @@ CORS(app)
 def get_users():
     id = request.args.get('id')
     password = request.args.get('password')
-    print(id +" : "+ password)
     value = login_db.check_password(id)
-    print(value)
     if value == password:
         return "Logged in successfully"
     else:
@@ -34,7 +32,6 @@ def login():
     if result == False:
         return 'Incorrect Password'
     value= protected_select.get_role_from_id(id)
-    print(value)
     if value=='Docente':
         return'Docente'
     return 'Studente'
@@ -56,7 +53,6 @@ def user_insert():
 @app.route('/insert/password', methods=['POST'])
 def password_insert():
     data = request.get_json()
-    print(data)
     id = data.get('id')
     password = data.get('password')
     if encrypt_password.pasword_exist(id) is None:
@@ -91,7 +87,6 @@ def esame_registrato_insert():
 @app.route('/insert/prova', methods=['POST'])
 def prova_insert():
     data = request.get_json()
-    print(data)
     appello = data.get('appello')
     tipo = data.get('tipo')
     ricaduta_esame = data.get('ricaduta')
@@ -101,20 +96,42 @@ def prova_insert():
     ret = protected_insert.insert_prova(appello, tipo, ricaduta_esame, opzionale, esame_appartenente)
     return jsonify(ret)
 
+@app.route('/insert/prova-studente', methods=['POST'])
+def prova_insert_from_studenti():
+    data = request.get_json()
+    id_studente = data.get('id_studente')
+    id_prova = data.get('id_prova')
+    data_appello = data.get('data_appello')
+    data_scadenza = data.get('data_scadenza')
+
+    ret = protected_insert.insert_prova_sostenuta_studente(id_studente,id_prova,data_appello,data_scadenza)
+    return jsonify(ret)
 
 @app.route('/insert/prova_sostenuta', methods=['POST'])
 def prova_sostenuta_insert():
     data = request.get_json()
     id_studente = data.get('studente')
     id_prova = data.get('prova')
-    data_appello = data.get('appello')
-    data_superamento = data.get('superamento')
-    data_scadenza = data.get('scadenza')
-    voto = data.get('voto')
+    data_appello = data.get('data_appello')  
+    data_scadenza = data.get('data_scadenza')
+    voto = int(data.get('voto'))  
     valid = data.get('valid')
-
-    ret = protected_insert.insert_prova_sostenuta(id_studente, id_prova, data_appello, data_superamento, data_scadenza, voto, valid)
+    superato = voto > 18 
+    ret = protected_insert.insert_prova_sostenuta(id_studente, id_prova, data_appello, data_scadenza, voto, valid, superato)
     return jsonify(ret)
+
+@app.route('/insert/prova_sostenuta_short', methods=['POST'])
+def prova_sostenuta_insert_short():
+    data = request.get_json()
+    id_studente = data.get('studente')
+    id_prova = data.get('prova')
+    data_scandenza = data.get('data_scadenza')
+    voto = int(data.get('voto'))  
+    valid = data.get('valid')
+    superato = voto > 18  
+    ret = protected_insert.update_prova_sostenuta_data(id_studente, id_prova, data_scandenza, voto, valid, superato)
+    return jsonify(ret)
+
 
 
 @app.route('/insert/prova_gestita', methods=['POST'])
@@ -142,19 +159,14 @@ def delete_prova(id_prova):
     ret = delete_by_id.delete_prova_by_id(id_prova)
     return jsonify(ret)
 
-@app.route('/delete/prova_sostenuta/studente/<int:id_studente>', methods=['DELETE'])
-def delete_prova_sostenuta_by_id_studente(id_studente):
-    ret = delete_by_id.delete_prova_sostenuta_by_id_studente(id_studente)
+@app.route('/delete/prova_sostenuta/studente/<int:id_studente>/<int:id_prova>', methods=['DELETE'])
+def delete_prova_sostenuta_by_id_studente(id_studente, id_prova):
+    ret = delete_by_id.delete_prova_sostenuta_by_id_studente(id_studente, id_prova)
     return jsonify(ret)
 
 @app.route('/delete/prova_gestita/docente/<int:id_docente>', methods=['DELETE'])
 def delete_prova_gestita_by_id_docente(id_docente):
     ret = delete_by_id.delete_prova_gestita_by_id_docente(id_docente)
-    return jsonify(ret)
-
-@app.route('/delete/prova_sostenuta/prova/<int:id_prova>', methods=['DELETE'])
-def delete_prova_sostenuta_by_id_prova(id_prova):
-    ret = delete_by_id.delete_prova_sostenuta_by_id_prova(id_prova)
     return jsonify(ret)
 
 @app.route('/delete/prova_gestita/prova/<int:id_prova>', methods=['DELETE'])
@@ -260,7 +272,6 @@ def get_prove_gestite(id_docente):
 @app.route('/update/password', methods=['POST'])
 def password_update():
     data = request.get_json()
-    print(data)
     id = data.get('id')
     vecchia_password = data.get('vecchia_password')
     nuova_password = data.get('nuova_password')
@@ -297,3 +308,19 @@ def get_students_by_prova(prova_id):
         return jsonify(students)
     else:
         return jsonify({"error": "Error querying the database"})
+    
+@app.route('/get/prove-by-esame/<int:esame_id>/<int:student_id>', methods=['GET'])
+def get_prove_by_id_esame(esame_id, student_id):
+    prove = protected_select.get_prove_by_esame(esame_id, student_id)
+    if prove is not None: 
+        return jsonify(prove)
+    else:
+        return jsonify({"error": "Nessuna prova trovata "})
+
+@app.route('/get/student-id-from-prova-id/<int:prova_id>', methods=['GET'])
+def get_students_by_prova_id(prova_id):
+    prove = protected_select.get_students_by_prova_id(prova_id)
+    if prove is not None: 
+        return jsonify(prove)
+    else:
+        return jsonify({"error": "Nessuna prova trovata "})

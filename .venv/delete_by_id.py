@@ -54,15 +54,15 @@ def delete_prova_by_id(id_prova):
         return f'Error deleting data: {e}'
 
 
-def delete_prova_sostenuta_by_id_studente(id_studente):
+def delete_prova_sostenuta_by_id_studente(id_studente, id_prova):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
         query = """
                 DELETE FROM prove_sostenuta
-                WHERE id_studente = %s
+                WHERE id_studente = %s AND id_prova = %s
                 """
-        values = (id_studente,)
+        values = (id_studente,id_prova,)
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(conn)
@@ -71,22 +71,6 @@ def delete_prova_sostenuta_by_id_studente(id_studente):
     except psycopg2.Error as e:
         return f'Error deleting data: {e}'
 
-def delete_prova_sostenuta_by_id_prova(id_prova):
-    try:
-        conn = connection.open_db()
-        cursor = conn.cursor()
-        query = """
-                DELETE FROM prove_sostenuta
-                WHERE id_prova = %s
-                """
-        values = (id_prova,)
-        cursor.execute(query, values)
-        conn.commit()
-        connection.close_db(conn)
-        return f'Data with ID {id_prova} deleted from "prove_sostenuta" table successfully!'
-
-    except psycopg2.Error as e:
-        return f'Error deleting data: {e}'
 
 def delete_prova_gestita_by_id_prova(id_prova):
     try:

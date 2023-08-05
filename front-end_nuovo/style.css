@@ -24,6 +24,8 @@ nav {
 }
 
 .nav-section {
+  position: sticky;
+  top: 0; 
   flex: 1;
   padding: 10px;
 }
