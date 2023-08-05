@@ -1,0 +1,105 @@
+Ecco uno schema delle tabelle richieste con le relative colonne:
+
+1. Tabella "esami":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id_esame    | integer      |                        | NO        |
+| min_prove   | integer      |                        | YES       |
+| max_prove   | integer      |                        | YES       |
+| docente_responsabile | integer |                       | YES       |
+| nome        | character varying | 100                  | YES       |
+| descrizione | character varying | 500                  | YES       |
++-------------+--------------+------------------------+-----------+
+```
+
+2. Tabella "esami_registrati":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id_esame    | integer      |                        | NO        |
+| id_utente   | integer      |                        | NO        |
+| voto        | integer      |                        | YES       |
+| data        | date         |                        | YES       |
++-------------+--------------+------------------------+-----------+
+```
+
+3. Tabella "login":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id          | integer      |                        | NO        |
+| password    | character varying | 255                  | YES       |
+| salt        | character varying | 128                  | YES       |
++-------------+--------------+------------------------+-----------+
+```
+
+4. Tabella "prova_gestita":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id_docente  | integer      |                        | YES       |
+| id_prova    | integer      |                        | YES       |
++-------------+--------------+------------------------+-----------+
+```
+
+5. Tabella "prove":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id_prova    | integer      |                        | NO        |
+| appello     | date         |                        | YES       |
+| opzionale   | boolean      |                        | YES       |
+| esame_appartenente | integer |                        | YES       |
+| tipo        | character varying | 50                   | YES       |
+| ricaduta_esame | character varying | 50                | YES       |
++-------------+--------------+------------------------+-----------+
+```
+il tipo può essere: scritto, orale, progetto
+la ricaduta_esame può essere: media, bonus, idoneita
+
+6. Tabella "prove_sostenuta":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id_studente | integer      |                        | YES       |
+| id_prova    | integer      |                        | YES       |
+| data_appello | date         |                        | YES       |
+| data_scadenza | date        |                        | YES       |
+| voto        | integer      |                        | YES       |
++-------------+--------------+------------------------+-----------+
+```
+
+7. Tabella "ruoli":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id          | integer      |                        | NO        |
+| ruolo       | character varying | 50                   | YES       |
++-------------+--------------+------------------------+-----------+
+```
+ruolo studente:1
+ruolo docente:2
+
+8. Tabella "utenti":
+```
++-------------+--------------+------------------------+-----------+
+| column_name | data_type    | character_maximum_length | is_nullable |
++-------------+--------------+------------------------+-----------+
+| id_utente   | integer      |                        | NO        |
+| data_nascita | date         |                        | YES       |
+| data_immatricolazione | date |                        | YES       |
+| ruolo       | integer      |                        | YES       |
+| luogo_nascita | character varying | 100               | YES       |
+| nome        | character varying | 50                   | YES       |
+| cognome     | character varying | 50                   | YES       |
+| codice_fiscale | character varying | 16                | YES       |
++-------------+--------------+------------------------+-----------+
+```
