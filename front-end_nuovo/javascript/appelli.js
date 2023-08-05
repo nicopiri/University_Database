@@ -70,7 +70,7 @@ function handleIscrivitiButtonClick(id_prova, data_appello, id_studente) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            alert('Iscrito con successo!');
+            alert('Iscritto con successo!');
             
             // Refresh the prove data after successful subscription
             populateExamProveData(examSelect.value, id_studente);

@@ -102,9 +102,8 @@ def prova_insert_from_studenti():
     id_studente = data.get('id_studente')
     id_prova = data.get('id_prova')
     data_appello = data.get('data_appello')
-    data_scadenza = data.get('data_scadenza')
 
-    ret = protected_insert.insert_prova_sostenuta_studente(id_studente,id_prova,data_appello,data_scadenza)
+    ret = protected_insert.insert_prova_sostenuta_studente(id_studente,id_prova,data_appello)
     return jsonify(ret)
 
 @app.route('/insert/prova_sostenuta', methods=['POST'])
