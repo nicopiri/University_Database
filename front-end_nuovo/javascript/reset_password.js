@@ -12,7 +12,7 @@ document.getElementById("reset-password-form").addEventListener("submit", functi
 
   // Validate if the new password and confirm password match
   if (newPassword !== confirmNewPassword) {
-    console.log("New password and confirm password do not match.");
+    alert("New password and confirm password do not match.");
     return;
   }
 
@@ -37,8 +37,14 @@ document.getElementById("reset-password-form").addEventListener("submit", functi
     })
     .then(data => {
       console.log(data); // Password update success message, if any
+      if (data === "Password Updated") {
+        alert("Password aggiornato con successo");
+      } else {
+        alert("An error occurred while updating the password.");
+      }
     })
     .catch(error => {
       console.error('Fetch error:', error);
+      alert("An error occurred while updating the password.");
     });
 });

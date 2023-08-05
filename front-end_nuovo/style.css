@@ -1,0 +1,158 @@
+/* Common styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f7fa;
+  color: #333;
+}
+
+header {
+  background-color: #007BFF;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-section {
+  flex: 1;
+  padding: 10px;
+}
+
+nav h2 {
+  margin-bottom: 10px;
+  color: #007BFF;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+button {
+  border: none;
+  background-color: #007BFF;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.nav-section:last-child {
+  text-align: right;
+}
+
+/* Form and container styles */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+input:required, textarea:required {
+  border-color: #ff6666;
+}
+
+input:invalid, textarea:invalid {
+  border-color: #ff6666;
+}
+
+input:valid, textarea:valid {
+  border-color: #66ff66;
+}
+
+/* Table styles */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid black;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Pagination styles */
+#pagination {
+  margin-top: 10px;
+}
+
+/* Pagination button styles */
+#prev-page-btn, #next-page-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#prev-page-btn:disabled, #next-page-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

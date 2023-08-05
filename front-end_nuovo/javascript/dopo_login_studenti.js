@@ -18,7 +18,6 @@ function fetchAndPopulateStudentData(studentId) {
     });
 }
 
-// Populate student data
 function populateStudentData(studentData) {
   const menuContainer = document.getElementById("menu-container");
   menuContainer.innerHTML = '';
@@ -27,7 +26,7 @@ function populateStudentData(studentData) {
   studentInfoList.classList.add("student-info");
 
   const studentProperties = [
-    "Student ID",
+    "ID",
     "Nome",
     "Cognome",
     "CF",
@@ -38,12 +37,26 @@ function populateStudentData(studentData) {
 
   for (let i = 0; i < studentProperties.length; i++) {
     const listItem = document.createElement("li");
-    listItem.innerHTML = `<strong>${studentProperties[i]}:</strong> ${studentData[i]}`;
+    let propertyValue = studentData[i];
+
+    // Handle date fields
+    if (studentProperties[i] === "DataNascita" || studentProperties[i] === "DataImmatricolazione") {
+      const date = new Date(propertyValue);
+      propertyValue = formatDate(date);
+    }
+
+    listItem.innerHTML = `<strong>${studentProperties[i]}:</strong> ${propertyValue}`;
     studentInfoList.appendChild(listItem);
   }
 
   menuContainer.appendChild(studentInfoList);
 }
+
+function formatDate(date) {
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  return date.toLocaleDateString(undefined, options);
+}
+
 
 document.getElementById("prove_sostenute-btn").addEventListener("click", function (event) {
   event.preventDefault();
