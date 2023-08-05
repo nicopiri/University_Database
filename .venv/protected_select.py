@@ -169,7 +169,7 @@ def get_studenti_registrabili_by_id_esame(id_esame):
             WHERE p.opzionale = FALSE
             AND ps.valid = TRUE
             AND e.id_esame = %s
-            AND p.ricaduta_esame = 'media'
+            AND p.ricaduta_esame = 'Media'
             GROUP BY u.id_utente, u.nome, u.cognome, e.min_prove
             HAVING COUNT(ps.id_prova) >= e.min_prove
             AND AVG(ps.voto) >= 18;
@@ -236,22 +236,7 @@ def get_prove_by_esame(id_esame, id_studente):
     except psycopg2.Error as e:
         print("Error querying the database:", e)
         return None
-    
-def get_students_by_prova_id(prova_id):
-    try:
-        conn = connection.open_db()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT ps.id_studente
-            FROM prove_sostenuta ps 
-            WHERE ps.id_prova = %s;
-        """, (prova_id,))
-        students = cursor.fetchall()
-        conn.close()
-        return students
-    except psycopg2.Error as e:
-        print("Error querying the database:", e)
-        return None
+
     
 def get_prove_sostenute_docente(id_docente):
     try:

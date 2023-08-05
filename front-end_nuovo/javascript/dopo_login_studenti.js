@@ -58,11 +58,6 @@ function formatDate(date) {
 }
 
 
-document.getElementById("prove_sostenute-btn").addEventListener("click", function (event) {
-  event.preventDefault();
-  window.location.href = `prove.html?id=${studentId}`;
-});
-
 document.getElementById("libretto-btn").addEventListener("click", function (event) {
   event.preventDefault();
   window.location.href = `libretto.html?id=${studentId}`;
