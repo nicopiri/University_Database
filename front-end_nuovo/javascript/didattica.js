@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", function() {
   const esamiRegistratiBtn = document.getElementById("esamiRegistratiBtn");
   const listaStudentiConProveSuperateBtn = document.getElementById("listaStudenti");
   const creaProveSostenuteBtn = document.getElementById("creaproveSostenuteBtn");
+  const provaGestitaBtn = document.getElementById("provaGestitaBtn");
+
+  provaGestitaBtn.addEventListener("click", function(){
+    redirectToPage("prova_gestita.html");
+  });
 
   creaProveSostenuteBtn.addEventListener("click", function(){
     redirectToPage("crea_prova_sostenuta.html");

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert and Display Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Insert Data</h1>
+        <form id="insertForm">            
+            <label for="prova">Prova ID:</label>
+            <input type="text" id="prova" name="prova" required>
+            
+            <button type="submit">Insert Data</button>
+        </form>
+        <div id="responseMessage"></div>
+        
+        <h1>Prove Gestite</h1>
+        <table id="provaTable">
+            <thead>
+                <tr>
+                    <th>Prova ID</th>
+                    <th>Data Apello/th>
+                    <th>Tipo</th>
+                    <th>Ricaduta Esame</th>
+                    <th>Opzionale</th>
+                    <th>Cancella</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="javascript/prova_gestita.js"></script>
+</body>
+</html>

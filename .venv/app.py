@@ -164,9 +164,9 @@ def delete_prova_sostenuta_by_id_studente(id_studente, id_prova):
     ret = delete_by_id.delete_prova_sostenuta_by_id_studente(id_studente, id_prova)
     return jsonify(ret)
 
-@app.route('/delete/prova_gestita/docente/<int:id_docente>', methods=['DELETE'])
-def delete_prova_gestita_by_id_docente(id_docente):
-    ret = delete_by_id.delete_prova_gestita_by_id_docente(id_docente)
+@app.route('/delete/prova_gestita/docente/<int:id_docente>/<int:id_prova>', methods=['DELETE'])
+def delete_prova_gestita_by_id_docente(id_docente, id_prova):
+    ret = delete_by_id.delete_prova_gestita_by_id_docente(id_docente, id_prova)
     return jsonify(ret)
 
 @app.route('/delete/prova_gestita/prova/<int:id_prova>', methods=['DELETE'])

@@ -89,15 +89,15 @@ def delete_prova_gestita_by_id_prova(id_prova):
     except psycopg2.Error as e:
         return f'Error deleting data: {e}'
 
-def delete_prova_gestita_by_id_docente(id_docente):
+def delete_prova_gestita_by_id_docente(id_docente, id_prova):
     try:
         conn = connection.open_db()
         cursor = conn.cursor()
         query = """
                 DELETE FROM prova_gestita
-                WHERE id_docente = %s
+                WHERE id_docente = %s AND id_prova = %s
                 """
-        values = (id_docente,)
+        values = (id_docente,id_prova)
         cursor.execute(query, values)
         conn.commit()
         connection.close_db(conn)
