@@ -252,3 +252,22 @@ def get_students_by_prova_id(prova_id):
     except psycopg2.Error as e:
         print("Error querying the database:", e)
         return None
+    
+def get_prove_sostenute_docente(id_docente):
+    try:
+        conn = connection.open_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT e.nome, ps.id_prova, ps.id_studente, ps.data_appello, ps.data_scadenza, ps.voto, ps.valid
+            FROM prove_sostenuta ps
+            JOIN prove p ON ps.id_prova = p.id_prova
+            JOIN esami e ON p.esame_appartenente = e.id_esame
+            JOIN prova_gestita pg ON p.id_prova = pg.id_prova
+            WHERE pg.id_docente = %s;
+        """, (id_docente,))
+        students = cursor.fetchall()
+        conn.close()
+        return students
+    except psycopg2.Error as e:
+        print("Error querying the database:", e)
+        return None    

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   proveSostenuteBtn.addEventListener("click", function() {
-    redirectToPage("prova_sostenuta.html");
+    redirectToPage("prova_sostenuta_docente.html");
   });
 
   esamiBtn.addEventListener("click", function() {

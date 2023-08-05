@@ -324,3 +324,11 @@ def get_students_by_prova_id(prova_id):
         return jsonify(prove)
     else:
         return jsonify({"error": "Nessuna prova trovata "})
+    
+@app.route('/get/prove-sostenute-docente/<int:id_docente>', methods=['GET'])
+def get_prove_sostenute_docente(id_docente):
+    ret = protected_select.get_prove_sostenute_docente(id_docente)
+    if ret is not None: 
+        return jsonify(ret)
+    else:
+        return jsonify({"error": "Nessuna prova trovata "})
