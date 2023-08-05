@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
           const deleteButton = document.createElement("button");
           deleteButton.textContent = "Delete";
           deleteButton.addEventListener("click", function() {
-            const confirmDelete = window.confirm("Are you sure you want to delete this?");
+            const confirmDelete = window.confirm("Sei sicuro di voler cancellare il dato?");
             if (confirmDelete) {
               deleteEsameRegistrato(esame[0], esame[2]);
             }

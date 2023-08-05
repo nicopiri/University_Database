@@ -11,9 +11,14 @@ document.addEventListener("DOMContentLoaded", function() {
   const logOutBtn = document.getElementById("logoutBtn");
   const creaEsameRegistratiBtn = document.getElementById("creaEsameRegistratiBtn");
   const esamiRegistratiBtn = document.getElementById("esamiRegistratiBtn");
+  const listaStudentiConProveSuperateBtn = document.getElementById("listaStudenti");
 
+  listaStudentiConProveSuperateBtn.addEventListener("click", function(){
+    redirectToPage("lista_studenti.html");
+  });
+  
   provaBtn.addEventListener("click", function() {
-    redirectToPage("lista_appelli.html");
+    redirectToPage("prove.html");
   });
 
   creaProvaBtn.addEventListener("click", function() {
@@ -47,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
   esamiRegistratiBtn.addEventListener("click", function(){
     redirectToPage("esame_registrato.html")
   });
-  // Fetch and populate student data
+
+  
   fetchAndPopulateStudentData(userId);
 
   function redirectToPage(page) {
@@ -73,10 +79,10 @@ document.addEventListener("DOMContentLoaded", function() {
   function populateStudentData(studentData) {
     const menuContainer = document.getElementById("menu-container");
     menuContainer.innerHTML = '';
-
+  
     const studentInfoList = document.createElement("ul");
     studentInfoList.classList.add("student-info");
-
+  
     const studentProperties = [
       "ID",
       "Nome",
@@ -86,13 +92,27 @@ document.addEventListener("DOMContentLoaded", function() {
       "DataNascita",
       "DataImmatricolazione",
     ];
-
+  
     for (let i = 0; i < studentProperties.length; i++) {
       const listItem = document.createElement("li");
-      listItem.innerHTML = `<strong>${studentProperties[i]}:</strong> ${studentData[i]}`;
+      let propertyValue = studentData[i];
+  
+      // Handle date fields
+      if (studentProperties[i] === "DataNascita" || studentProperties[i] === "DataImmatricolazione") {
+        const date = new Date(propertyValue);
+        propertyValue = formatDate(date);
+      }
+  
+      listItem.innerHTML = `<strong>${studentProperties[i]}:</strong> ${propertyValue}`;
       studentInfoList.appendChild(listItem);
     }
-
+  
     menuContainer.appendChild(studentInfoList);
   }
+  
+  function formatDate(date) {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
+  
 });
