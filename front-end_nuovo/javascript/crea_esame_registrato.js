@@ -3,17 +3,19 @@ const docenteResponsabile = urlParams.get('id');
 
 document.addEventListener("DOMContentLoaded", async function() {
   const insertForm = document.getElementById("insert-form");
+  const esameSelectElement = document.getElementById("id_esame");
+  const studenteSelectElement = document.getElementById("id_studente");
+  const checkButton = document.getElementById("check-button");
 
   // Populate the exam select element
-  const esameSelectElement = document.getElementById("id_esame");
   try {
     const response = await fetch(`http://127.0.0.1:5000/get/esami/${docenteResponsabile}`);
     if (response.ok) {
       const examsData = await response.json();
       examsData.forEach(exam => {
         const option = document.createElement("option");
-        option.value = exam[0]; // Use the ID as the option value
-        option.textContent = exam[1]; // Use the exam name as the visible text
+        option.value = exam[0];
+        option.textContent = exam[1];
         esameSelectElement.appendChild(option);
       });
     } else {
@@ -23,10 +25,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     console.error("An error occurred:", error);
   }
 
-  // Populate the student select element
-  const studenteSelectElement = document.getElementById("id_studente");
-  esameSelectElement.addEventListener("change", async function() {
-    // Clear any existing options
+  checkButton.addEventListener("click", async function() {
     studenteSelectElement.innerHTML = "";
 
     const selectedExamId = esameSelectElement.value;
@@ -36,8 +35,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         const studentsData = await response.json();
         studentsData.forEach(student => {
           const option = document.createElement("option");
-          option.value = student[0]; // Use the ID as the option value
-          option.textContent = `${student[0]} : ${student[1]} ${student[2]}`; // Use the student name as the visible text
+          option.value = student[0];
+          option.textContent = `${student[0]} : ${student[1]} ${student[2]}`;
           studenteSelectElement.appendChild(option);
         });
       } else {
