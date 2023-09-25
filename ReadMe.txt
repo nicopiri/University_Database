@@ -1,0 +1,1 @@
+"A university project for the Database Fundamentals exam, in collaboration with two classmates, which required the creation of a web app for managing university exams from both the professor and student perspectives."
